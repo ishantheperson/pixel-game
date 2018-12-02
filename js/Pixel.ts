@@ -35,6 +35,8 @@ abstract class Pixel {
    */
   Update(world: World): void {
     this.DidUpdate = true;
+    if (this.IsStatic()) return;
+    
     this.ApplyForce(World.Gravity);
     
     let y = this.Velocity.y;

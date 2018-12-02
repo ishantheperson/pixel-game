@@ -21,14 +21,13 @@ body {
 
 h1 { font-size: 3em; margin: 0 }
 h2 { font-weight: normal; }
+h3 { font-size: 1.3em; }
 
 input { font: inherit; }
 [type=number] { width: 2em; text-align: right; }
 a { color: navy; text-decoration: underline; cursor: pointer; }
 
 #items {
-  color: navy;
-  
   display: flex;
 }
 
@@ -40,6 +39,7 @@ a { color: navy; text-decoration: underline; cursor: pointer; }
 #items p:not(.selected) {
   text-decoration: underline;
   cursor: pointer;
+  color: navy;
 }
 
 .selected {

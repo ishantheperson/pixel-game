@@ -3,6 +3,10 @@ class BlockPixel extends Pixel {
     return PixelDurabilities.Block;
   }
   
+  GetWeight(): number {
+    return PixelWeights.Block;
+  }
+  
   GetType(): PixelType {
     return PixelType.Block;
   }
