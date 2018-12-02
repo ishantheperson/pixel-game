@@ -1,5 +1,6 @@
 enum PixelType {
   Empty,
+  Block,
   Sand,
   Water
 }
@@ -26,6 +27,12 @@ class Pixel {
   constructor(pos: Vector2) {
     this.position = pos;
   }
+  
+  /**
+   * Updates this pixel
+   * @param world Game world (for physics)
+   */
+  Update(world: World): void {}
   
   /**
    * Gets the render color for this pixel

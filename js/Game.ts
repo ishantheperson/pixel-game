@@ -1,4 +1,5 @@
-const PIXEL_SIZE = 2;
+const FPS = 30;
+const PIXEL_SIZE = 15;
 
 /**
  * Does the gritty graphics stuff
@@ -16,7 +17,9 @@ class Game {
   constructor(size: Vector2, context: CanvasRenderingContext2D) {
     this.size = size;
     this.context = context;
-    this.world = new World({ x: size.x / PIXEL_SIZE, y: size.y / PIXEL_SIZE });
+    this.world = new World({
+      x: Math.floor(size.x / PIXEL_SIZE),
+      y: Math.floor(size.y / PIXEL_SIZE) });
     
     // <editor-fold desc="Register event handlers">
     
@@ -51,8 +54,9 @@ class Game {
     // </editor-fold>
     
     this.gameLoopInterval = setInterval(() => {
+      this.world.UpdateAll();
       this.Render();
-    }, 1000 / 60);
+    }, 1000 / FPS);
   }
   
   AddPixel(x: number, y: number) {

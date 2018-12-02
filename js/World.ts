@@ -31,16 +31,56 @@ class World {
   }
   
   /**
+   * Gets pixel at specified location
+   * @param Location from top left
+   * @returns Pixel requested
+   */
+  GetPixel(pos: Vector2): Pixel {
+    if (!(0 <= pos.y && pos.y < this.size.y
+       && 0 <= pos.x && pos.x < this.size.x ))
+      return PixelFactory.NewPixel(pos, PixelType.Block);
+    
+    return this.board[pos.y][pos.x];
+  }
+  
+  private swapStack = [];
+  
+  Swap(pos1: Vector2, pos2: Vector2) {
+    this.swapStack.push(pos1, pos2);
+  }
+  
+  UpdateAll(): void {
+    this.swapStack = [];
+    for (let y = 0; y < this.size.y; y++) {
+      for (let x = 0; x < this.size.x; x++) {
+        if (this.board[y][x] == null) continue;
+        
+        this.board[y][x].Update(this);
+      }
+    }
+    
+    while (this.swapStack.length !== 0) {
+      const pos1 = this.swapStack.pop();
+      const pos2 = this.swapStack.pop();
+      
+      const temp = this.board[pos1.y][pos1.x];
+      this.board[pos1.y][pos1.x] = this.board[pos2.y][pos2.x];
+      this.board[pos2.y][pos2.x] = temp;
+    }
+  }
+  
+  /**
    * Renders all pixels in the board
-   * @param renderMethod
-   * @constructor
+   * @param renderMethod Graphics method to render an individual pixel
    */
   RenderAll(renderMethod: (pos: Vector2, color: string) => void): void {
     for (let y = 0; y < this.size.y; y++) {
       for (let x = 0; x < this.size.x; x++) {
         //if (this.board[y][x].GetType() == PixelType.Empty) continue;
-        if (this.board[y][x] == null) continue;
-        
+        if (this.board[y][x] == null) {
+          renderMethod({ x: x, y: y }, "black");
+        }
+        else 
         renderMethod({x: x, y: y}, this.board[y][x].GetColor()); // TODO
       }
     }

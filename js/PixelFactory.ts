@@ -3,6 +3,10 @@ class PixelFactory {
     switch (type) {
       case PixelType.Empty:
         return new Pixel(pos);
+        
+      case PixelType.Block:
+        return new BlockPixel(pos);
+        
       case PixelType.Sand:
         return new SandPixel(pos);
         

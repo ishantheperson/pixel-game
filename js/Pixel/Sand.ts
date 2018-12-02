@@ -1,9 +1,16 @@
+///<reference path="../Pixel.ts"/>
+
 /**
  * Basic sand pixel
  */
 class SandPixel extends Pixel {
-  constructor(pos: Vector2) {
-    super(pos);
+  Update(world: World): void {
+    const below = { x: this.position.x, y: this.position.y + 1 };
+    
+    if (world.GetPixel(below) == null) {
+      world.Swap({ ...this.position }, below);
+      this.position.y++;
+    }
   }
   
   GetColor(): string {
