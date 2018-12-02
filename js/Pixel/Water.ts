@@ -7,7 +7,7 @@ class WaterPixel extends Pixel {
     // Affects liquid spread speed
     // Thicker liquids are more durable and are therefore slower
     // 0 -> left, 1 -> right, 2+ -> nothing
-    let random = GetRandomInt(2 + (this.GetFluidViscosity() / PixelViscosities.Water));
+    let random = GetRandomInt(4 + (this.GetFluidViscosity() / PixelViscosities.Water));
     
     if (random === 1) {
       const left = {x: this.Position.x - 1, y: this.Position.y};

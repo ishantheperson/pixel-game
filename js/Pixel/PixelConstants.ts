@@ -5,15 +5,15 @@ const PixelDurabilities = {
   Block: Number.MAX_SAFE_INTEGER
 };
 
-const PixelWeights = {
+let PixelWeights = {
   Default: 20,
   Block: Number.MAX_SAFE_INTEGER,
-  Water: 10,
-  Magma: 15
-}
+  Water: 15,
+  Magma: 18,
+};
 
 const PixelViscosities = {
   Default: Number.MAX_SAFE_INTEGER,
   Water: 3,
-  Magma: 12
-}
+  Magma: 30
+};

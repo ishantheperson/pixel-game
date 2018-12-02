@@ -42,7 +42,7 @@ abstract class Pixel {
     
     // Resolve y component
     while (y !== 0) {
-      const dir = { x: this.Position.x, y: this.Position.y + (y < 0 ? -1 : 1)};
+      const dir = { x: this.Position.x, y: this.Position.y + (y < 0 ? -1 : 1) };
       if (Pixel.CanMoveInto(this, world.GetPixel(dir))) {
         y += y < 0 ? 1 : -1;
         world.Swap(this.Position, dir);
@@ -52,7 +52,7 @@ abstract class Pixel {
     }
     // Resolve x component
     while (x !== 0) {
-      const dir = { x: this.Position.x, y: this.Position.y + (x < 0 ? -1 : 1)};
+      const dir = { x: this.Position.x + (x < 0 ? -1 : 1), y: this.Position.y };
       if (Pixel.CanMoveInto(this, world.GetPixel(dir))) {
         x += x < 0 ? 1 : -1;
         world.Swap(this.Position, dir);
