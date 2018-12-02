@@ -7,8 +7,21 @@
 
   <link rel="stylesheet" href="style.css">
   <style>
-    #elemSelect p {
+    #elemSelect {
       color: navy;
+      cursor: pointer;
+    }
+
+    #elemSelect :not(.selected) {
+      text-decoration: underline;
+    }
+
+    .selected {
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+      
+      cursor: default;
     }
   </style>
 
@@ -22,6 +35,7 @@
 
       canvas.width = WIDTH;
       canvas.height = HEIGHT;
+      canvas.style.border = "1px solid black";
 
       gameArea.appendChild(canvas);
 
@@ -36,7 +50,7 @@
   <h2>Ishan Bhargava</h2>
 
   <div id="elemSelect">
-    <p>Sand</p>
+    <p class="selected">Sand</p>
     <p>Water</p>
   </div>
 </div>
