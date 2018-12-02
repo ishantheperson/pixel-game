@@ -46,7 +46,7 @@ class Pixel {
    * -1 represents it's not a liquid
    */
   GetFluidViscosity(): number {
-    return -1;
+    return Number.MAX_SAFE_INTEGER;
   }
   
   /**

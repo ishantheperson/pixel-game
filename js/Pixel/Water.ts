@@ -5,11 +5,10 @@ class WaterPixel extends Pixel {
     this.DidUpdate = true;
   
     const below = { x: this.Position.x, y: this.Position.y + 1 };
-  
-    // the reason this doesnt work is because two swaps happen
-    // in the event that we have the diagonal configuration:
-    // first the
-    if (world.GetPixel(below) === null) {
+    const belowPixel = world.GetPixel(below);
+    
+    if (belowPixel === null ||  (!belowPixel.IsStatic() &&
+      belowPixel.GetFluidViscosity() < this.GetFluidViscosity())) {
       world.Swap({ ...this.Position }, below);
     }
     
@@ -18,19 +17,23 @@ class WaterPixel extends Pixel {
       let random = GetRandomInt(3);
       
       if (random === 1) {
-        const left = {x: this.Position.x - 1, y: this.Position.y};
+        const left = { x: this.Position.x - 1, y: this.Position.y };
   
         if (world.GetPixel(left) === null) {
           world.Swap({...this.Position}, left);
         }
       }
       else if (random === 2) {
-        const right = {x: this.Position.x + 1, y: this.Position.y};
+        const right = { x: this.Position.x + 1, y: this.Position.y };
         if (world.GetPixel(right) === null) {
           world.Swap({...this.Position}, right);
         }
       }
     }
+  }
+  
+  IsStatic(): boolean {
+    return false;
   }
   
   GetFluidViscosity(): number {

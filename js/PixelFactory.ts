@@ -2,7 +2,8 @@ enum PixelType {
   Empty,
   Block,
   Sand,
-  Water
+  Water,
+  Magma
 }
 
 class PixelFactory {
@@ -19,6 +20,9 @@ class PixelFactory {
         
       case PixelType.Water:
         return new WaterPixel(pos);
+        
+      case PixelType.Magma:
+        return new MagmaPixel(pos);
         
       default:
         throw new TypeError("Unknown PixelType " + type);
