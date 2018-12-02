@@ -1,6 +1,6 @@
 class BlockPixel extends Pixel {
   GetDurability(): number {
-    return Number.MAX_SAFE_INTEGER;
+    return PixelDurabilities.Block;
   }
   
   GetType(): PixelType {

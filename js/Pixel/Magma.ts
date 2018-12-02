@@ -18,7 +18,11 @@ class MagmaPixel extends WaterPixel {
   }
   
   GetFluidViscosity(): number {
-    return 5;
+    return PixelViscosities.Magma; // TODO: move to external file
+  }
+  
+  GetWeight(): number {
+    return PixelWeights.Magma;
   }
   
   GetColor(): string {

@@ -3,7 +3,10 @@
  */
 class World {
   private readonly size: Vector2; // store for easy of access
-  private board: Pixel[][]; // probably will make a World class
+  private readonly board: Pixel[][]; // probably will make a World class
+  
+  static Gravity: Vector2 = { x: 0, y: 20 };
+  static AirResistance: Vector2 = { x: 20, y: 20 };
   
   constructor(size: Vector2) {
     this.size = size;
@@ -57,6 +60,7 @@ class World {
       this.board[pos.y][pos.x] = null;
       return true;
     }
+    
     return false;
   }
   
@@ -111,11 +115,7 @@ class World {
   RenderAll(render: (pos: Vector2, color: string) => void): void {
     for (let y = 0; y < this.size.y; y++) {
       for (let x = 0; x < this.size.x; x++) {
-        //if (this.board[y][x].GetType() == PixelType.Empty) continue;
-        if (this.board[y][x] == null) {
-          //render({ x: x, y: y }, "black");
-        }
-        else
+        if (this.board[y][x] != null)
           render({x: x, y: y}, this.board[y][x].GetColor());
       }
     }

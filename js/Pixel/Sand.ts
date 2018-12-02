@@ -5,14 +5,15 @@
  */
 class SandPixel extends Pixel {
   Update(world: World): void {
-    this.DidUpdate = true;
-  
-    const below = { x: this.Position.x, y: this.Position.y + 1 };
-    const belowPixel = world.GetPixel(below);
-    
-    if (Pixel.CanMoveInto(this, belowPixel)) {
-      world.Swap({ ...this.Position }, below);
-    }
+    super.Update(world);
+    // this.DidUpdate = true;
+    //
+    // const below = { x: this.Position.x, y: this.Position.y + 1 };
+    // const belowPixel = world.GetPixel(below);
+    //
+    // if (Pixel.CanMoveInto(this, belowPixel)) {
+    //   world.Swap({ ...this.Position }, below);
+    // }
   }
   
   IsStatic(): boolean {

@@ -1,4 +1,4 @@
-const FPS = 30;
+const FPS = 60;
 const PIXEL_SIZE = 4;
 
 /**
