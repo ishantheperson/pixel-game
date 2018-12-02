@@ -14,7 +14,6 @@ class World {
       this.board.push([]);
       for (let x = 0; x < size.x; x++) {
         this.board[y][x] = null;
-        //this.board[y].push(new Pixel({ x: x, y: y }));
       }
     }
   }
@@ -32,7 +31,7 @@ class World {
   
   /**
    * Gets pixel at specified location
-   * @param Location from top left
+   * @param pos Location from top left
    * @returns Pixel requested
    */
   GetPixel(pos: Vector2): Pixel {
@@ -43,45 +42,53 @@ class World {
     return this.board[pos.y][pos.x];
   }
   
-  private swapStack = [];
+  ApplyForce(location: Vector2, magnitude: Vector2) {
+    throw new Error("Not implemented yet")
+  }
   
-  Swap(pos1: Vector2, pos2: Vector2) {
-    this.swapStack.push(pos1, pos2);
+  /**
+   * Swaps the Pixels at pos1, pos2 (i.e. move from pos1 to pos2)
+   */
+  Swap(pos1: Vector2, pos2: Vector2): void {
+    const temp = this.board[pos1.y][pos1.x];
+    this.board[pos1.y][pos1.x] = this.board[pos2.y][pos2.x];
+    this.board[pos2.y][pos2.x] = temp;
   }
   
   UpdateAll(): void {
-    this.swapStack = [];
+    // Reset all particle update states
     for (let y = 0; y < this.size.y; y++) {
       for (let x = 0; x < this.size.x; x++) {
-        if (this.board[y][x] == null) continue;
-        
-        this.board[y][x].Update(this);
+        if (this.board[y][x] != null) {
+          this.board[y][x].DidUpdate = false;
+        }
       }
     }
     
-    while (this.swapStack.length !== 0) {
-      const pos1 = this.swapStack.pop();
-      const pos2 = this.swapStack.pop();
-      
-      const temp = this.board[pos1.y][pos1.x];
-      this.board[pos1.y][pos1.x] = this.board[pos2.y][pos2.x];
-      this.board[pos2.y][pos2.x] = temp;
+    for (let y = 0; y < this.size.y; y++) {
+      for (let x = 0; x < this.size.x; x++) {
+        const pixel = this.board[y][x];
+        if (pixel == null) continue;
+        if (pixel.DidUpdate) continue;
+        
+        pixel.Update(this);
+      }
     }
   }
   
   /**
    * Renders all pixels in the board
-   * @param renderMethod Graphics method to render an individual pixel
+   * @param render Graphics method to render an individual pixel
    */
-  RenderAll(renderMethod: (pos: Vector2, color: string) => void): void {
+  RenderAll(render: (pos: Vector2, color: string) => void): void {
     for (let y = 0; y < this.size.y; y++) {
       for (let x = 0; x < this.size.x; x++) {
         //if (this.board[y][x].GetType() == PixelType.Empty) continue;
         if (this.board[y][x] == null) {
-          renderMethod({ x: x, y: y }, "black");
+          //render({ x: x, y: y }, "black");
         }
-        else 
-        renderMethod({x: x, y: y}, this.board[y][x].GetColor()); // TODO
+        else
+          render({x: x, y: y}, this.board[y][x].GetColor()); // TODO
       }
     }
   }

@@ -9,9 +9,11 @@ body {
   font-size: 24px;
 }
 
-#sidebar, #gameArea { width: 100%; }
-#sidebar {
+#sidebar, #gameArea {
   align-self: center;
+  width: 100%;
+}
+#sidebar {
   text-align: right;
   padding-right: 1em;
   flex-shrink: 2;

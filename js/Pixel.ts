@@ -2,7 +2,7 @@ enum PixelType {
   Empty,
   Block,
   Sand,
-  Water
+  Water // Glitchy
 }
 
 /**
@@ -10,15 +10,21 @@ enum PixelType {
  */
 class Pixel {
   /**
+   * Prevents recalculations
+   */
+  public DidUpdate: boolean = false;
+  
+  /**
    * Particle position.
    * Used for physics calculations (e.g. get neighbors)
    */
   protected position: Vector2;
   
   /**
-   * Used for physics calculations
+   * Used for forces physics calculations
    */
-  protected weight: number;
+  protected weight: number = NaN; // Doesn't participate in physics
+  
   
   /**
    * Returns a default pixel
@@ -35,10 +41,18 @@ class Pixel {
   Update(world: World): void {}
   
   /**
+   * Represents whether this pixel
+   * is not affected by physics calculations
+   */
+  IsStatic(): boolean {
+    return true;
+  }
+  
+  /**
    * Gets the render color for this pixel
    */
   GetColor(): string {
-    return "black";
+    return "white"; // background color
   }
   
   GetType(): PixelType {

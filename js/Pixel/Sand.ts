@@ -11,6 +11,12 @@ class SandPixel extends Pixel {
       world.Swap({ ...this.position }, below);
       this.position.y++;
     }
+    
+    this.DidUpdate = true;
+  }
+  
+  IsStatic(): boolean {
+    return true;
   }
   
   GetColor(): string {

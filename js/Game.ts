@@ -1,5 +1,5 @@
 const FPS = 30;
-const PIXEL_SIZE = 15;
+const PIXEL_SIZE = 2;
 
 /**
  * Does the gritty graphics stuff
