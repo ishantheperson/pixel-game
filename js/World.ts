@@ -30,18 +30,17 @@ class World {
   }
   
   /**
-   * Gets pixel type at specified location
+   * Gets pixel at specified location
    * @param pos Location from top left
-   * @returns Pixel type requested
+   * @returns Pixel requested
    */
-  GetPixel(pos: Vector2): PixelType {
+  GetPixel(pos: Vector2): Pixel {
     if (0 <= pos.y && pos.y < this.size.y
        && 0 <= pos.x && pos.x < this.size.x )
-      return this.board[pos.y][pos.x] === null
-        ? PixelType.Empty : this.board[pos.y][pos.x].GetType();
+      return this.board[pos.y][pos.x];
     
     // Out of bounds
-    return PixelType.Block;
+    return PixelFactory.NewPixel(pos, PixelType.Block);
   }
   
   ApplyForce(location: Vector2, magnitude: Vector2) {
@@ -54,11 +53,17 @@ class World {
   
   /**
    * Swaps the Pixels at pos1, pos2 (i.e. move from pos1 to pos2)
+   * Updates their positions
    */
   Swap(pos1: Vector2, pos2: Vector2): void {
     const temp = this.board[pos1.y][pos1.x];
     this.board[pos1.y][pos1.x] = this.board[pos2.y][pos2.x];
     this.board[pos2.y][pos2.x] = temp;
+    
+    const a = this.board[pos1.y][pos1.x];
+    const b = this.board[pos2.y][pos2.x];
+    if (a != null) a.Position = { ...pos1 };
+    if (b != null) b.Position = { ...pos2 };
   }
   
   UpdateAll(): void {

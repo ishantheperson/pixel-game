@@ -4,14 +4,13 @@ class WaterPixel extends Pixel {
   Update(world: World): void {
     this.DidUpdate = true;
   
-    const below = { x: this.position.x, y: this.position.y + 1 };
+    const below = { x: this.Position.x, y: this.Position.y + 1 };
   
     // the reason this doesnt work is because two swaps happen
     // in the event that we have the diagonal configuration:
     // first the
-    if (world.GetPixel(below) === PixelType.Empty) {
-      world.Swap({ ...this.position }, below);
-      this.position.y++;
+    if (world.GetPixel(below) === null) {
+      world.Swap({ ...this.Position }, below);
     }
     
     else {
@@ -19,18 +18,16 @@ class WaterPixel extends Pixel {
       let random = GetRandomInt(3);
       
       if (random === 1) {
-        const left = {x: this.position.x - 1, y: this.position.y};
+        const left = {x: this.Position.x - 1, y: this.Position.y};
   
-        if (world.GetPixel(left) === PixelType.Empty) {
-          world.Swap({...this.position}, left);
-          this.position.x--;
+        if (world.GetPixel(left) === null) {
+          world.Swap({...this.Position}, left);
         }
       }
       else if (random === 2) {
-        const right = {x: this.position.x + 1, y: this.position.y};
-        if (world.GetPixel(right) === PixelType.Empty) {
-          world.Swap({...this.position}, right);
-          this.position.x++;
+        const right = {x: this.Position.x + 1, y: this.Position.y};
+        if (world.GetPixel(right) === null) {
+          world.Swap({...this.Position}, right);
         }
       }
     }

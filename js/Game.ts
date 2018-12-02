@@ -27,13 +27,9 @@ class Game {
     
     // <editor-fold desc="Register event handlers">
     
-    // Handles switching PixelTypes
-    document.getElementById("elements").addEventListener("click", (event) => {
+    // Handles switching tool/pixel types
+    document.getElementById("items").addEventListener("click", (event) => {
       if ((<HTMLElement>event.target).tagName === "P") {
-        // Toggles selected state on everything
-        document.querySelector(".selected").classList.remove("selected");
-        (<HTMLElement>event.target).classList.add("selected");
-        
         const id = (<HTMLElement>event.target).parentElement.id;
         const newType = (<HTMLElement>event.target).innerText;
         
@@ -42,13 +38,17 @@ class Game {
           if (this.currentTool == undefined) {
             throw new Error("Unknown ToolType " + newType);
           }
+          document.querySelector("#tools .selected").classList.remove("selected");
         }
         else if (id === "elements") {
           this.currentPixel = PixelType[newType];
           if (this.currentPixel == undefined) {
             throw new Error("Unknown PixelType " + newType);
           }
+          document.querySelector("#elements .selected").classList.remove("selected");
         }
+        
+        (<HTMLElement>event.target).classList.add("selected");
       }
     });
   

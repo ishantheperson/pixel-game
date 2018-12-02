@@ -8,10 +8,10 @@ class Pixel {
   public DidUpdate: boolean = false;
   
   /**
-   * Particle position.
+   * Particle Position.
    * Used for physics calculations (e.g. get neighbors)
    */
-  protected position: Vector2;
+  public Position: Vector2;
   
   /**
    * Used for forces physics calculations
@@ -21,10 +21,10 @@ class Pixel {
   
   /**
    * Returns a default pixel
-   * @param pos Pixel position
+   * @param pos Pixel Position
    */
   constructor(pos: Vector2) {
-    this.position = pos;
+    this.Position = pos;
   }
   
   /**

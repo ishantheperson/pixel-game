@@ -7,11 +7,11 @@ class SandPixel extends Pixel {
   Update(world: World): void {
     this.DidUpdate = true;
   
-    const below = { x: this.position.x, y: this.position.y + 1 };
+    const below = { x: this.Position.x, y: this.Position.y + 1 };
+    const belowPixel = world.GetPixel(below);
     
-    if (world.GetPixel(below) === PixelType.Empty) {
-      world.Swap({ ...this.position }, below);
-      this.position.y++;
+    if (belowPixel === null || belowPixel.GetFluidViscosity() > 0) {
+      world.Swap({ ...this.Position }, below); // TODO: notify new pixel of movement
     }
   }
   
