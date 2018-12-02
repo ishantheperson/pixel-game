@@ -1,3 +1,8 @@
+enum ToolType {
+  Default,
+  Explosion
+}
+
 class ToolFactory {
   static GetTool(type: ToolType) {
     switch (type) {

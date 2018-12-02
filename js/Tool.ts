@@ -1,8 +1,3 @@
-enum ToolType {
-  Default,
-  Explosion
-}
-
 /**
  * Base tool (does nothing)
  */

@@ -1,10 +1,3 @@
-enum PixelType {
-  Empty,
-  Block,
-  Sand,
-  Water // Glitchy
-}
-
 /**
  * Default (blank) pixel
  */

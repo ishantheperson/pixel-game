@@ -1,3 +1,10 @@
+enum PixelType {
+  Empty,
+  Block,
+  Sand,
+  Water
+}
+
 class PixelFactory {
   static NewPixel(pos: Vector2, type: PixelType) {
     switch (type) {
