@@ -1,5 +1,5 @@
 const FPS = 30;
-const PIXEL_SIZE = 2;
+const PIXEL_SIZE = 4;
 
 /**
  * Does the gritty graphics stuff
@@ -38,6 +38,7 @@ class Game {
           if (this.currentTool == undefined) {
             throw new Error("Unknown ToolType " + newType);
           }
+          
           document.querySelector("#tools .selected").classList.remove("selected");
         }
         else if (id === "elements") {
@@ -45,6 +46,7 @@ class Game {
           if (this.currentPixel == undefined) {
             throw new Error("Unknown PixelType " + newType);
           }
+          
           document.querySelector("#elements .selected").classList.remove("selected");
         }
         

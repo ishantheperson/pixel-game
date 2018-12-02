@@ -1,7 +1,8 @@
 /**
  * Default (blank) pixel
+ * Can only be represented with null
  */
-class Pixel {
+abstract class Pixel {
   /**
    * Prevents recalculations
    */
@@ -22,6 +23,7 @@ class Pixel {
   /**
    * Returns a default pixel
    * @param pos Pixel Position
+   * @constructor
    */
   constructor(pos: Vector2) {
     this.Position = pos;
@@ -42,8 +44,16 @@ class Pixel {
   }
   
   /**
+   * How hard is it to destroy this
+   * Lower is easier
+   */
+  GetDurability(): number {
+    return PixelDurabilities.Default;
+  }
+  
+  /**
    * Used to figure out which liquids go on top of others
-   * -1 represents it's not a liquid
+   * MAX_INT represents it's not a liquid
    */
   GetFluidViscosity(): number {
     return Number.MAX_SAFE_INTEGER;
@@ -52,11 +62,17 @@ class Pixel {
   /**
    * Gets the render color for this pixel
    */
-  GetColor(): string {
-    return "white"; // background color
-  }
+  abstract GetColor(): string;
   
-  GetType(): PixelType {
-    return PixelType.Empty;
+  abstract GetType(): PixelType;
+  
+  /**
+   * Returns true if (a) can move into (b)
+   * @param a
+   * @param b
+   */
+  static CanMoveInto(a: Pixel, b: Pixel): boolean {
+    return b === null ||
+      (!b.IsStatic() && b.GetFluidViscosity() < a.GetFluidViscosity());
   }
 }

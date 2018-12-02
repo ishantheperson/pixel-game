@@ -10,7 +10,7 @@ class PixelFactory {
   static NewPixel(pos: Vector2, type: PixelType) {
     switch (type) {
       case PixelType.Empty:
-        return new Pixel(pos);
+        return null;
         
       case PixelType.Block:
         return new BlockPixel(pos);

@@ -43,8 +43,25 @@ class World {
     return PixelFactory.NewPixel(pos, PixelType.Block);
   }
   
+  /**
+   * Attempts to destroy a pixel using the durability system
+   * @param pos Position of the pixel to delete
+   * @param sourceDurability Durability of the pixel doing the destroying
+   * @returns True if successfully destroyed
+   */
+  DestroyPixel(pos: Vector2, sourceDurability: number): boolean {
+    if (0 <= pos.y && pos.y < this.size.y
+          && 0 <= pos.x && pos.x < this.size.x
+          && this.board[pos.y][pos.x] !== null
+          && sourceDurability > this.board[pos.y][pos.x].GetDurability()) {
+      this.board[pos.y][pos.x] = null;
+      return true;
+    }
+    return false;
+  }
+  
   ApplyForce(location: Vector2, magnitude: Vector2) {
-    throw new Error("Not implemented yet")
+    throw new Error("Not implemented yet");
   }
   
   UseTool(location: Vector2, type: ToolType): void {
@@ -99,7 +116,7 @@ class World {
           //render({ x: x, y: y }, "black");
         }
         else
-          render({x: x, y: y}, this.board[y][x].GetColor()); // TODO
+          render({x: x, y: y}, this.board[y][x].GetColor());
       }
     }
   }

@@ -7,14 +7,15 @@ class WaterPixel extends Pixel {
     const below = { x: this.Position.x, y: this.Position.y + 1 };
     const belowPixel = world.GetPixel(below);
     
-    if (belowPixel === null ||  (!belowPixel.IsStatic() &&
-      belowPixel.GetFluidViscosity() < this.GetFluidViscosity())) {
+    if (Pixel.CanMoveInto(this, belowPixel)) {
       world.Swap({ ...this.Position }, below);
     }
     
     else {
-      // 0 -> left, 1 -> right, 2 -> nothing
-      let random = GetRandomInt(3);
+      // Affects liquid spread speed
+      // Thicker liquids are more durable and are therefore slower
+      // 0 -> left, 1 -> right, 2+ -> nothing
+      let random = GetRandomInt(2 + (this.GetDurability() / PixelDurabilities.Water));
       
       if (random === 1) {
         const left = { x: this.Position.x - 1, y: this.Position.y };
@@ -34,6 +35,10 @@ class WaterPixel extends Pixel {
   
   IsStatic(): boolean {
     return false;
+  }
+  
+  GetDurability(): number {
+    return PixelDurabilities.Water;
   }
   
   GetFluidViscosity(): number {
