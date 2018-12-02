@@ -6,29 +6,12 @@
   <title>Pixel Game</title>
 
   <link rel="stylesheet" href="style.css">
-  <style>
-    #elemSelect {
-      color: navy;
-      cursor: pointer;
-    }
-
-    #elemSelect :not(.selected) {
-      text-decoration: underline;
-    }
-
-    .selected {
-      color: black;
-      font-weight: bold;
-      text-decoration: none;
-      
-      cursor: default;
-    }
-  </style>
 
   <script src="js/app.js"></script>
   <script>
     const WIDTH = 800, HEIGHT = 400;
 
+    let game;
     window.addEventListener("DOMContentLoaded", () => {
       let canvas = document.createElement("canvas");
       let gameArea = document.getElementById("gameArea");
@@ -39,20 +22,28 @@
 
       gameArea.appendChild(canvas);
 
-      game = new Game({ x: WIDTH, y: HEIGHT }, canvas.getContext('2d'));
+      game = new Game({ x: WIDTH, y: HEIGHT }, canvas);
     })
   </script>
 </head>
 
 <body>
+
 <div id="sidebar">
   <h1>Pixel Game</h1>
   <h2>Ishan Bhargava</h2>
 
-  <div id="elemSelect">
-    <p>Block</p>
-    <p class="selected">Sand</p>
-    <p>Water</p>
+  <div id="items">
+    <div id="tools" class="selectArea">
+      <p class="selected">Explosion</p>
+      <p>Default</p>
+    </div>
+
+    <div id="elements" class="selectArea">
+     <p>Block</p>
+     <p class="selected">Sand</p>
+     <p>Water</p>
+   </div>
   </div>
 </div>
 

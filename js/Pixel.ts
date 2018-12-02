@@ -49,6 +49,14 @@ class Pixel {
   }
   
   /**
+   * Used to figure out which liquids go on top of others
+   * -1 represents it's not a liquid
+   */
+  GetFluidViscosity(): number {
+    return -1;
+  }
+  
+  /**
    * Gets the render color for this pixel
    */
   GetColor(): string {

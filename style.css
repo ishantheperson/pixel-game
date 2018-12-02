@@ -25,3 +25,25 @@ h2 { font-weight: normal; }
 input { font: inherit; }
 [type=number] { width: 2em; text-align: right; }
 a { color: navy; text-decoration: underline; cursor: pointer; }
+
+#items {
+  color: navy;
+  
+  display: flex;
+}
+
+.selectArea {
+  flex-grow: 1;
+  padding: 1em
+}
+
+#items p:not(.selected) {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.selected {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}

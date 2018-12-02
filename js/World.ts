@@ -30,20 +30,26 @@ class World {
   }
   
   /**
-   * Gets pixel at specified location
+   * Gets pixel type at specified location
    * @param pos Location from top left
-   * @returns Pixel requested
+   * @returns Pixel type requested
    */
-  GetPixel(pos: Vector2): Pixel {
-    if (!(0 <= pos.y && pos.y < this.size.y
-       && 0 <= pos.x && pos.x < this.size.x ))
-      return PixelFactory.NewPixel(pos, PixelType.Block);
+  GetPixel(pos: Vector2): PixelType {
+    if (0 <= pos.y && pos.y < this.size.y
+       && 0 <= pos.x && pos.x < this.size.x )
+      return this.board[pos.y][pos.x] === null
+        ? PixelType.Empty : this.board[pos.y][pos.x].GetType();
     
-    return this.board[pos.y][pos.x];
+    // Out of bounds
+    return PixelType.Block;
   }
   
   ApplyForce(location: Vector2, magnitude: Vector2) {
     throw new Error("Not implemented yet")
+  }
+  
+  UseTool(location: Vector2, type: ToolType): void {
+    ToolFactory.GetTool(type).Apply(location, this);
   }
   
   /**

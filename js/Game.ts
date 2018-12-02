@@ -11,12 +11,16 @@ class Game {
   private gameLoopInterval: number;
   private context: CanvasRenderingContext2D;
   
+  private mouseEvent: MouseEvent;
   private isMouseDown: boolean;
-  private currentType: PixelType = PixelType.Sand;
   
-  constructor(size: Vector2, context: CanvasRenderingContext2D) {
+  
+  private currentPixel: PixelType = PixelType.Sand;
+  private currentTool: ToolType = ToolType.Explosion;
+  
+  constructor(size: Vector2, canvas: HTMLCanvasElement) {
     this.size = size;
-    this.context = context;
+    this.context = canvas.getContext("2d");
     this.world = new World({
       x: Math.floor(size.x / PIXEL_SIZE),
       y: Math.floor(size.y / PIXEL_SIZE) });
@@ -24,46 +28,81 @@ class Game {
     // <editor-fold desc="Register event handlers">
     
     // Handles switching PixelTypes
-    document.getElementById("elemSelect").addEventListener("click", (event) => {
-      if ((<Element>event.target).tagName === "P") {
+    document.getElementById("elements").addEventListener("click", (event) => {
+      if ((<HTMLElement>event.target).tagName === "P") {
+        // Toggles selected state on everything
         document.querySelector(".selected").classList.remove("selected");
-        (<Element>event.target).classList.add("selected");
+        (<HTMLElement>event.target).classList.add("selected");
         
+        const id = (<HTMLElement>event.target).parentElement.id;
         const newType = (<HTMLElement>event.target).innerText;
         
-        this.currentType = PixelType[newType];
-        if (this.currentType == undefined) {
-          throw new Error("unknown PixelType " + newType);
+        if (id === "tools") {
+          this.currentTool = ToolType[newType];
+          if (this.currentTool == undefined) {
+            throw new Error("Unknown ToolType " + newType);
+          }
+        }
+        else if (id === "elements") {
+          this.currentPixel = PixelType[newType];
+          if (this.currentPixel == undefined) {
+            throw new Error("Unknown PixelType " + newType);
+          }
         }
       }
     });
   
-    this.context.canvas.addEventListener("mouseup", () => {
+    // <editor-fold desc="Mouse">
+    canvas.addEventListener("mouseup", () => {
       this.isMouseDown = false;
     });
   
-    this.context.canvas.addEventListener("mousedown", (event: MouseEvent) => {
+    canvas.addEventListener("mousedown", (event: MouseEvent) => {
+      this.mouseEvent = event;
       this.isMouseDown = true;
-      this.AddPixel(event.offsetX, event.offsetY);
     });
-    
 
-    this.context.canvas.addEventListener("mousemove", (event) => {
-      if (this.isMouseDown) this.AddPixel(event.offsetX, event.offsetY);
+    canvas.addEventListener("mousemove", (event: MouseEvent) => {
+      this.mouseEvent = event;
     });
     // </editor-fold>
     
+    document.addEventListener("keydown", (event: KeyboardEvent) => {
+      if (event.key === 't') {
+        this.UseTool(this.MouseToWorld());
+      }
+    });
+    
+    // </editor-fold>
+    
     this.gameLoopInterval = setInterval(() => {
+      if (this.isMouseDown)
+        this.AddPixel(this.MouseToWorld());
+      
       this.world.UpdateAll();
       this.Render();
     }, 1000 / FPS);
   }
   
-  AddPixel(x: number, y: number) {
-    this.world.AddPixel({ x: Math.floor(x / PIXEL_SIZE), y: Math.floor(y / PIXEL_SIZE) }, this.currentType);
+  /**
+   * Converts screen coordinates to scaled world coordinates
+   */
+  private MouseToWorld(): Vector2 {
+    return {
+      x: Math.floor(this.mouseEvent.offsetX / PIXEL_SIZE),
+      y: Math.floor(this.mouseEvent.offsetY / PIXEL_SIZE)
+    };
   }
   
-  Render() {
+  private AddPixel(worldPos: Vector2): void {
+    this.world.AddPixel(worldPos, this.currentPixel);
+  }
+  
+  private UseTool(worldPos: Vector2): void {
+    this.world.UseTool(worldPos, this.currentTool);
+  }
+  
+  private Render(): void {
     this.context.clearRect(0, 0, this.size.x, this.size.y);
     
     this.world.RenderAll(((pos: Vector2, color: string) => {
