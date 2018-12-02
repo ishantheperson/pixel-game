@@ -1,0 +1,25 @@
+html, body {
+  height: 100%; width: 100%; margin: 0; padding: 0;
+}
+
+body {
+  display: flex;
+  padding: 2em 5em;;
+  box-sizing: border-box;
+  font-size: 24px;
+}
+
+#sidebar, #gameArea { width: 100%; }
+#sidebar {
+  align-self: center;
+  text-align: right;
+  padding-right: 1em;
+  flex-shrink: 2;
+}
+
+h1 { font-size: 3em; margin: 0 }
+h2 { font-weight: normal; }
+
+input { font: inherit; }
+[type=number] { width: 2em; text-align: right; }
+a { color: navy; text-decoration: underline; cursor: pointer; }

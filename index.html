@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <title>Pixel Game</title>
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    #elemSelect p {
+      color: navy;
+    }
+  </style>
+
+  <script src="js/app.js"></script>
+  <script>
+    const WIDTH = 400, HEIGHT = 200;
+
+    window.addEventListener("DOMContentLoaded", () => {
+      let canvas = document.createElement("canvas");
+      let gameArea = document.getElementById("gameArea");
+
+      canvas.width = WIDTH;
+      canvas.height = HEIGHT;
+
+      gameArea.appendChild(canvas);
+
+      game = new Game({x: WIDTH, y: HEIGHT}, canvas.getContext('2d'));
+    })
+  </script>
+</head>
+
+<body>
+<div id="sidebar">
+  <h1>Pixel Game</h1>
+  <h2>Ishan Bhargava</h2>
+
+  <div id="elemSelect">
+    <p>Sand</p>
+    <p>Water</p>
+  </div>
+</div>
+
+<div id="gameArea"></div>
+</body>
+</html>
