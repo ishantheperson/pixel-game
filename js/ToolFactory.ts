@@ -1,19 +1,19 @@
+/// <reference path="Tool.ts" />
+/// <reference path="Tool/Explosion.ts" />
+/// <reference path="Tool/Eraser.ts" />
+
 enum ToolType {
-  Default,
-  Explosion
+  Explosion,
+  Eraser
 }
 
 class ToolFactory {
-  public static GetTool(type: ToolType) {
-    switch (type) {
-      case ToolType.Default:
-        return Tool;
-        
-      case ToolType.Explosion:
-        return ExplosionTool;
-        
-      default:
-        throw new TypeError("Unknown ToolType " + type);
-    }
+  public static GetTool(type: ToolType): Tool {
+    return this.toolsDict[ToolType[type]];
   }
+
+  private static toolsDict = {
+    Explosion: new ExplosionTool(),
+    Eraser: new Eraser()
+  };
 }
