@@ -28,7 +28,7 @@ class MagmaPixel extends WaterPixel {
   }
   
   public GetColor(): string {
-    return "red";
+    return PixelColors.Magma;
   }
   
   public GetType(): PixelType {

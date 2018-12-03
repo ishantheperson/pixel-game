@@ -4,8 +4,18 @@ enum PixelType {
   Sand,
   Water,
   Magma,
-  Clone
+  Clone,
+  Oil
 }
+
+const PixelColors = {
+  Block: "grey",
+  Sand: "#ffc22d", // yellow ish
+  Water: "blue",
+  Magma: "red",
+  Clone: "beige",
+  Oil: "brown"
+};
 
 const PixelDurabilities = {
   Default: 10,
@@ -23,7 +33,8 @@ const PixelWeights = {
 
 const PixelViscosities = {
   Default: Number.MAX_SAFE_INTEGER,
-  Water: 3,
+  Oil: 3,
+  Water: 6,
   Magma: 30
 };
 

@@ -3,22 +3,25 @@ class PixelFactory {
     switch (type) {
       case PixelType.Empty:
         return null;
-        
+
       case PixelType.Block:
         return new BlockPixel(pos);
-        
+
       case PixelType.Sand:
         return new SandPixel(pos);
-        
+
       case PixelType.Water:
         return new WaterPixel(pos);
-        
+
       case PixelType.Magma:
         return new MagmaPixel(pos);
 
       case PixelType.Clone:
         return new ClonePixel(pos);
-        
+
+      case PixelType.Oil:
+        return new OilPixel(pos);
+
       default:
         throw new TypeError("Unknown PixelType " + type);
     }

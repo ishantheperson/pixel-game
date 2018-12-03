@@ -13,7 +13,7 @@ class SandPixel extends Pixel {
   }
 
   public GetColor(): string {
-    return "#ffc22d"; // yellow ish
+    return PixelColors.Sand;
   }
   
   public GetType(): PixelType {

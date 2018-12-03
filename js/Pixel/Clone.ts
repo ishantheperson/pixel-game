@@ -30,6 +30,6 @@ class ClonePixel extends BlockPixel {
   }
 
   public GetColor(): string {
-    return "beige";
+    return PixelColors.Clone;
   }
 }

@@ -12,6 +12,6 @@ class BlockPixel extends Pixel {
   }
 
   public GetColor(): string {
-    return "gray";
+    return PixelColors.Block;
   }
 }

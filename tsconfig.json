@@ -3,7 +3,7 @@
     "module": "none",
     "target": "es6",
     "sourceMap": true,
-    "outFile": "app.js"
+    "outFile": "./app.js"
   },
   "exclude": [
     "node_modules"

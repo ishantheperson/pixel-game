@@ -45,6 +45,6 @@ class WaterPixel extends Pixel {
   }
   
   public GetColor(): string {
-    return "blue";
+    return PixelColors.Water;
   }
 }
