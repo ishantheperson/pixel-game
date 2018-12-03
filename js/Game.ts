@@ -8,12 +8,13 @@ class Game {
   private size: Vector2;
   private world: World;
   
-  private paused: boolean = false;
+  private isPaused: boolean = false;
   private gameLoopInterval: number;
   private context: CanvasRenderingContext2D;
   
   private mouseEvent: MouseEvent;
-  private isMouseDown: boolean;
+  private isMouseDown: boolean = false;
+  private isShiftDown: boolean = false;
   
   private currentPixel: PixelType = PixelType.Sand;
   private currentTool: ToolType = ToolType.Eraser;
@@ -72,24 +73,32 @@ class Game {
     //#endregion
     
     document.addEventListener("keydown", (event: KeyboardEvent) => {
+      this.isShiftDown = event.shiftKey;
       switch (event.key) {
         case "t":
           this.UseTool(this.MouseToWorld());
-          break
+          break;
 
         case "p":
-          this.paused = !this.paused;
+          this.isPaused = !this.isPaused;
           break;
       }
+    });
+    document.addEventListener("keyup", (event: KeyboardEvent) => {
+      this.isShiftDown = event.shiftKey;
     });
 
     //#endregion
     
     this.gameLoopInterval = setInterval(() => {
-      if (this.isMouseDown)
-        this.AddPixel(this.MouseToWorld());
+      if (this.isMouseDown) {
+        if (this.isShiftDown)
+          this.UseTool(this.MouseToWorld());
+        else
+          this.AddPixel(this.MouseToWorld());
+      }
 
-      if (!this.paused) this.world.UpdateAll();
+      if (!this.isPaused) this.world.UpdateAll();
       this.Render();
     }, 1000 / FPS);
   }
