@@ -4,6 +4,17 @@
  */
 abstract class Pixel {
   /**
+   * Returns true if (a) can move into (b)
+   * Basically means switch places
+   * @param a
+   * @param b
+   */
+  public static CanMoveInto(a: Pixel, b: Pixel): boolean {
+    return b === null ||
+      (!b.IsStatic() && b.GetFluidViscosity() < a.GetFluidViscosity());
+  }
+
+  /**
    * Prevents recalculations
    */
   public DidUpdate: boolean = false;
@@ -19,6 +30,8 @@ abstract class Pixel {
    */
   public Velocity: Vector2 = { x: 0, y: 0 };
   
+  public Acceleration: Vector2 = { x: 0, y: 0 };
+
   /**
    * Initializes pixel
    * @param pos Pixel Position
@@ -33,12 +46,12 @@ abstract class Pixel {
    * Resolves velocity
    * @param world Game world (for physics)
    */
-  Update(world: World): void {
+  public Update(world: World): void {
     this.DidUpdate = true;
     if (this.IsStatic()) return;
-    
+
     this.ApplyForce(World.Gravity);
-    
+
     let y = this.Velocity.y;
     let x = this.Velocity.x;
     
@@ -50,7 +63,10 @@ abstract class Pixel {
         world.Swap(this.Position, dir);
       }
       
-      else break;
+      else {
+        this.Velocity.y = 0;
+        break;
+      }
     }
     // Resolve x component
     while (x !== 0) {
@@ -59,22 +75,14 @@ abstract class Pixel {
         x += x < 0 ? 1 : -1;
         world.Swap(this.Position, dir);
       }
-      else break;
-    }
-    
-    // Air resistance applies in all directions
-    if (this.Velocity.x < 0)
-      this.Velocity.x = Math.min(0, this.Velocity.x + World.AirResistance.x);
-    else
-      this.Velocity.x = Math.max(0, this.Velocity.x - World.AirResistance.x);
-    
-    if (this.Velocity.y < 0)
-      this.Velocity.y = Math.min(0, this.Velocity.y + World.AirResistance.y);
-    else
-      this.Velocity.y = Math.max(0, this.Velocity.y - World.AirResistance.y);
+      else {
+        this.Velocity.x = 0;  
+        break;
+      }
+    }    
   }
   
-  ApplyForce(force: Vector2): void {
+  public ApplyForce(force: Vector2): void {
     this.Velocity.x += Math.floor(force.x / this.GetWeight());
     this.Velocity.y += Math.floor(force.y / this.GetWeight());
   }
@@ -83,19 +91,19 @@ abstract class Pixel {
    * Represents whether this pixel
    * is not affected by physics calculations
    */
-  IsStatic(): boolean {
+  public IsStatic(): boolean {
     return true;
   }
   
   /**
-   * How hard is it to destroy this
+   * How hard is it to destroy this.
    * Lower is easier
    */
-  GetDurability(): number {
+  public GetDurability(): number {
     return PixelDurabilities.Default;
   }
   
-  GetWeight(): number {
+  public GetWeight(): number {
     return PixelWeights.Default;
   }
   
@@ -103,25 +111,14 @@ abstract class Pixel {
    * Used to figure out which liquids go on top of others
    * MAX_INT represents it's not a liquid
    */
-  GetFluidViscosity(): number {
+  public GetFluidViscosity(): number {
     return Number.MAX_SAFE_INTEGER;
   }
   
   /**
    * Gets the render color for this pixel
    */
-  abstract GetColor(): string;
+  public abstract GetColor(): string;
   
-  abstract GetType(): PixelType;
-  
-  /**
-   * Returns true if (a) can move into (b)
-   * Basically means switch places
-   * @param a
-   * @param b
-   */
-  static CanMoveInto(a: Pixel, b: Pixel): boolean {
-    return b === null ||
-      (!b.IsStatic() && b.GetFluidViscosity() < a.GetFluidViscosity());
-  }
+  public abstract GetType(): PixelType;
 }

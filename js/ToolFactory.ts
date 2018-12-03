@@ -4,7 +4,7 @@ enum ToolType {
 }
 
 class ToolFactory {
-  static GetTool(type: ToolType) {
+  public static GetTool(type: ToolType) {
     switch (type) {
       case ToolType.Default:
         return Tool;

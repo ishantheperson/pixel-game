@@ -1,5 +1,7 @@
+/// <reference path="Water.ts" />
+
 class MagmaPixel extends WaterPixel {
-  Update(world: World): void {
+  public Update(world: World): void {
     super.Update(world);
     
     // Destroy a neighbor
@@ -13,23 +15,23 @@ class MagmaPixel extends WaterPixel {
     if (didDestroy) world.DestroyPixel(this.Position, Number.MAX_SAFE_INTEGER);
   }
   
-  GetDurability(): number {
+  public GetDurability(): number {
     return PixelDurabilities.Magma;
   }
   
-  GetFluidViscosity(): number {
+  public GetFluidViscosity(): number {
     return PixelViscosities.Magma;
   }
   
-  GetWeight(): number {
+  public GetWeight(): number {
     return PixelWeights.Magma;
   }
   
-  GetColor(): string {
+  public GetColor(): string {
     return "red";
   }
   
-  GetType(): PixelType {
+  public GetType(): PixelType {
     return PixelType.Magma;
   }
 }

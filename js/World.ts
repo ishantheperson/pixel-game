@@ -2,13 +2,13 @@
  * Abstract view of the game world
  */
 class World {
+  public static Gravity: Vector2 = { x: 0, y: 20 };
+  public static AirResistance: Vector2 = { x: 0, y: 0 };
+
   private readonly size: Vector2; // store for easy of access
-  private readonly board: Pixel[][]; // probably will make a World class
+  private readonly board: Pixel[][];
   
-  static Gravity: Vector2 = { x: 0, y: 20 };
-  static AirResistance: Vector2 = { x: 20, y: 20 };
-  
-  constructor(size: Vector2) {
+  public constructor(size: Vector2) {
     this.size = size;
     
     // Initialize empty board
@@ -27,7 +27,7 @@ class World {
    * @param pos Position to add
    * @param type Pixel type
    */
-  AddPixel(pos: Vector2, type: PixelType): void {
+  public AddPixel(pos: Vector2, type: PixelType): void {
     if (this.board[pos.y][pos.x] == null)
       this.board[pos.y][pos.x] = PixelFactory.NewPixel(pos, type);
   }
@@ -37,7 +37,7 @@ class World {
    * @param pos Location from top left
    * @returns Pixel requested
    */
-  GetPixel(pos: Vector2): Pixel {
+  public GetPixel(pos: Vector2): Pixel {
     if (0 <= pos.y && pos.y < this.size.y
        && 0 <= pos.x && pos.x < this.size.x )
       return this.board[pos.y][pos.x];
@@ -52,7 +52,7 @@ class World {
    * @param sourceDurability Durability of the pixel doing the destroying
    * @returns True if successfully destroyed
    */
-  DestroyPixel(pos: Vector2, sourceDurability: number): boolean {
+  public DestroyPixel(pos: Vector2, sourceDurability: number): boolean {
     if (0 <= pos.y && pos.y < this.size.y
           && 0 <= pos.x && pos.x < this.size.x
           && this.board[pos.y][pos.x] !== null
@@ -64,11 +64,12 @@ class World {
     return false;
   }
   
-  ApplyForce(location: Vector2, magnitude: Vector2) {
-    throw new Error("Not implemented yet");
+  public ApplyForce(location: Vector2, force: Vector2) {
+    const pixel = this.board[location.y][location.x];
+    if (pixel !== null) pixel.ApplyForce(force);
   }
   
-  UseTool(location: Vector2, type: ToolType): void {
+  public UseTool(location: Vector2, type: ToolType): void {
     ToolFactory.GetTool(type).Apply(location, this);
   }
   
@@ -76,7 +77,7 @@ class World {
    * Swaps the Pixels at pos1, pos2 (i.e. move from pos1 to pos2)
    * Updates their positions
    */
-  Swap(pos1: Vector2, pos2: Vector2): void {
+  public Swap(pos1: Vector2, pos2: Vector2): void {
     const temp = this.board[pos1.y][pos1.x];
     this.board[pos1.y][pos1.x] = this.board[pos2.y][pos2.x];
     this.board[pos2.y][pos2.x] = temp;
@@ -87,7 +88,7 @@ class World {
     if (b != null) b.Position = { ...pos2 };
   }
   
-  UpdateAll(): void {
+  public UpdateAll(): void {
     // Reset all particle update states
     for (let y = 0; y < this.size.y; y++) {
       for (let x = 0; x < this.size.x; x++) {
@@ -112,16 +113,12 @@ class World {
    * Renders all pixels in the board
    * @param render Graphics method to render an individual pixel
    */
-  RenderAll(render: (pos: Vector2, color: string) => void): void {
+  public RenderAll(render: (pos: Vector2, color: string) => void): void {
     for (let y = 0; y < this.size.y; y++) {
       for (let x = 0; x < this.size.x; x++) {
         if (this.board[y][x] != null)
-          render({x: x, y: y}, this.board[y][x].GetColor());
+          render({ x, y}, this.board[y][x].GetColor());
       }
     }
-  }
-  
-  GetSize(): Vector2 {
-    return this.size;
   }
 }

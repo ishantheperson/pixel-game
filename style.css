@@ -13,15 +13,16 @@ body {
   align-self: center;
   width: 100%;
 }
+
 #sidebar {
   text-align: right;
   padding-right: 1em;
   flex-shrink: 2;
 }
 
-h1 { font-size: 3em; margin: 0 }
-h2 { font-weight: normal; }
-h3 { font-size: 1.3em; }
+h1 { font-size: 3em; margin: 0; }
+h2 { font-weight: normal; margin: .1em; }
+h3 { font-size: 1.3em; margin: .1em; }
 
 input { font: inherit; }
 [type=number] { width: 2em; text-align: right; }
@@ -33,7 +34,7 @@ a { color: navy; text-decoration: underline; cursor: pointer; }
 
 .selectArea {
   flex-grow: 1;
-  padding: 1em
+  padding: 0 1em;
 }
 
 #items p:not(.selected) {

@@ -1,50 +1,50 @@
-///<reference path="../Pixel.ts"/>
+/// <reference path="../Pixel.ts"/>
 
 class WaterPixel extends Pixel {
-  Update(world: World): void {
+  public Update(world: World): void {
     super.Update(world);
     
     // Affects liquid spread speed
-    // Thicker liquids are more durable and are therefore slower
+    // Thicker liquids are slower
     // 0 -> left, 1 -> right, 2+ -> nothing
-    let random = GetRandomInt(4 + (this.GetFluidViscosity() / PixelViscosities.Water));
+    const random = GetRandomInt(4 + (this.GetFluidViscosity() / PixelViscosities.Water));
     
     if (random === 1) {
-      const left = {x: this.Position.x - 1, y: this.Position.y};
+      const left = { x: this.Position.x - 1, y: this.Position.y };
       
       if (world.GetPixel(left) === null) {
-        world.Swap({...this.Position}, left);
+        world.Swap({ ...this.Position }, left);
       }
     }
     else if (random === 2) {
-      const right = {x: this.Position.x + 1, y: this.Position.y};
+      const right = { x: this.Position.x + 1, y: this.Position.y };
       if (world.GetPixel(right) === null) {
-        world.Swap({...this.Position}, right);
+        world.Swap({ ...this.Position }, right);
       }
     }
   }
   
-  IsStatic(): boolean {
+  public IsStatic(): boolean {
     return false;
   }
   
-  GetDurability(): number {
+  public GetDurability(): number {
     return PixelDurabilities.Water;
   }
   
-  GetFluidViscosity(): number {
+  public GetFluidViscosity(): number {
     return PixelViscosities.Water; // Water is the least viscous
   }
   
-  GetWeight(): number {
+  public GetWeight(): number {
     return PixelWeights.Water;
   }
   
-  GetType(): PixelType {
+  public GetType(): PixelType {
     return PixelType.Water;
   }
   
-  GetColor(): string {
+  public GetColor(): string {
     return "blue";
   }
 }

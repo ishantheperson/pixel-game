@@ -1,4 +1,4 @@
-const FPS = 60;
+const FPS = 30;
 const PIXEL_SIZE = 4;
 
 /**
@@ -14,7 +14,6 @@ class Game {
   private mouseEvent: MouseEvent;
   private isMouseDown: boolean;
   
-  
   private currentPixel: PixelType = PixelType.Sand;
   private currentTool: ToolType = ToolType.Explosion;
   
@@ -23,7 +22,8 @@ class Game {
     this.context = canvas.getContext("2d");
     this.world = new World({
       x: Math.floor(size.x / PIXEL_SIZE),
-      y: Math.floor(size.y / PIXEL_SIZE) });
+      y: Math.floor(size.y / PIXEL_SIZE) 
+    });
     
     // <editor-fold desc="Register event handlers">
     
@@ -35,7 +35,7 @@ class Game {
         
         if (id === "tools") {
           this.currentTool = ToolType[newType];
-          if (this.currentTool == undefined) {
+          if (this.currentTool === undefined) {
             throw new Error("Unknown ToolType " + newType);
           }
           
@@ -43,7 +43,7 @@ class Game {
         }
         else if (id === "elements") {
           this.currentPixel = PixelType[newType];
-          if (this.currentPixel == undefined) {
+          if (this.currentPixel === undefined) {
             throw new Error("Unknown PixelType " + newType);
           }
           
@@ -70,7 +70,7 @@ class Game {
     // </editor-fold>
     
     document.addEventListener("keydown", (event: KeyboardEvent) => {
-      if (event.key === 't') {
+      if (event.key === "t") {
         this.UseTool(this.MouseToWorld());
       }
     });
