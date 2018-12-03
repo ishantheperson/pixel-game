@@ -122,5 +122,8 @@ abstract class Pixel {
    */
   public abstract GetColor(): string;
   
+  /**
+   * Returns this pixel's type
+   */
   public abstract GetType(): PixelType;
 }

@@ -9,8 +9,15 @@ class ClonePixel extends BlockPixel {
       for (let y = -1; y <= 1; y++) {
         for (let x = -1; x <= 1; x++) {
           const pixel = world.GetPixel({ x: this.Position.x + x, y: this.Position.y + y });
-          if (pixel !== null && pixel.GetType() !== PixelType.Clone) 
-            this.cloneType = pixel.GetType();
+
+          if (pixel !== null) {
+            if (pixel.GetType() === PixelType.Clone) {
+              // See if we can get a PixelType from a neighboring ClonePixel
+              const type = (pixel as ClonePixel).cloneType;
+              if (type !== PixelType.Empty) this.cloneType = type;
+            }
+            else this.cloneType = pixel.GetType();
+          }
         }
       }
     }
