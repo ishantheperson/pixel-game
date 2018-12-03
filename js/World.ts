@@ -71,6 +71,30 @@ class World {
     const pixel = this.board[location.y][location.x];
     if (pixel !== null) pixel.ApplyForce(force);
   }
+
+  /**
+   * Creates an explosion centered at a given location
+   * @param location Explosion center
+   * @param size Pixels to extend the explosion
+   * @param magnitude Explosion force
+   */
+  public Explode(location: Vector2, size: number = 60, magnitude: number = 150) {
+    this.DestroyPixel(location, Number.MAX_SAFE_INTEGER);
+  
+    for (let y = -size; y <= size; y++) {
+      for (let x = -size; x <= size; x++) {
+        const pixel = this.GetPixel({ x: location.x + x, y: location.y + y });
+        if (pixel !== null) {
+          const norm = Math.hypot(x, y);
+          pixel.ApplyForce({
+            x: Math.floor(x * magnitude / norm), 
+            y: Math.floor(y * magnitude / norm) 
+          });
+        }
+      }
+    }
+
+  }
   
   public UseTool(location: Vector2, type: ToolType): void {
     ToolFactory.GetTool(type).Apply(location, this);

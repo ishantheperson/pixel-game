@@ -1,5 +1,10 @@
 /// <reference path="Water.ts" />
 
+/**
+ * Magma pixel. 
+ * Destroys anything it touches.
+ * Reacts with oil to form explosions
+ */
 class MagmaPixel extends WaterPixel {
   public Update(world: World): void {
     super.Update(world);
@@ -11,10 +16,16 @@ class MagmaPixel extends WaterPixel {
         const pixel = world.GetPixel({  x: this.Position.x + x, y: this.Position.y + y });
         if (pixel !== null) {
           if (pixel.GetType() === PixelType.Oil) {
+            world.DestroyPixel(this.Position, Number.MAX_SAFE_INTEGER);
+            // ToolFactory.GetTool(ToolType.Explosion).Apply(this.Position, world);  
+            world.Explode(pixel.Position, 30, 60);
+          } 
+          else if (pixel.GetType() === PixelType.Fuse) {
+            // TODO: explode the entire chain
             world.DestroyPixel(pixel.Position, Number.MAX_SAFE_INTEGER);
-            ToolFactory.GetTool(ToolType.Explosion).Apply(this.Position, world);  
+            world.Explode(pixel.Position, 30, 60);
           }
-          if (world.DestroyPixel(pixel.Position, this.GetDurability())) {
+          else if (world.DestroyPixel(pixel.Position, this.GetDurability())) {
             didDestroy = true;
           }
         }

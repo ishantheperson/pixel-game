@@ -1,7 +1,7 @@
 ///<reference path="../Pixel.ts"/>
 
 /**
- * Basic sand pixel
+ * Basic sand pixel.
  */
 class SandPixel extends Pixel {
   public Update(world: World): void {

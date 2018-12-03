@@ -1,5 +1,5 @@
 /**
- * Default (blank) pixel
+ * Default (blank) pixel.
  * Can only be represented with null
  */
 abstract class Pixel {

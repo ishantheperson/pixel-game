@@ -1,5 +1,15 @@
 /// <reference path="Block.ts" />
 
+/**
+ * Affects rate of cloning. 
+ * Higher values lead to lower rates
+ */
+const CLONE_CHANCE = 8; 
+
+/**
+ * Clones the first thing which touches it.
+ * Contigious with any neighboring ClonePixels
+ */
 class ClonePixel extends BlockPixel {
   private cloneType: PixelType = PixelType.Empty;
 
@@ -23,7 +33,7 @@ class ClonePixel extends BlockPixel {
     }
     else {
       // 50% chance of spawning a new pixel
-      if (GetRandomInt(100) % 4 === 0) {
+      if (GetRandomInt(100) % CLONE_CHANCE === 0) {
         // Select a random location to the side
         const x = this.Position.x + (GetRandomInt(3) - 1);
         const y = this.Position.y + (GetRandomInt(3) - 1);

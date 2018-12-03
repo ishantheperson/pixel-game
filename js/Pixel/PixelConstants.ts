@@ -1,3 +1,6 @@
+/**
+ * Represents all possible Pixel types
+ */
 enum PixelType {
   Empty,
   Block,
@@ -5,16 +8,21 @@ enum PixelType {
   Water,
   Magma,
   Clone,
-  Oil
+  Oil,
+  Fuse
 }
 
+/**
+ * Colors each pixel will be rendered as
+ */
 const PixelColors = {
   Block: "grey",
   Sand: "#ffc22d", // yellow ish
   Water: "blue",
   Magma: "red",
-  Clone: "beige",
-  Oil: "brown"
+  Clone: "#b29966",
+  Oil: "brown",
+  Fuse: "sienna"
 };
 
 const PixelDurabilities = {
@@ -40,5 +48,6 @@ const PixelViscosities = {
 
 const PixelInsertScales = {
   Default: 2,
+  Clone: 4,
   Block: 4
 };

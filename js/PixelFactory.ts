@@ -22,6 +22,9 @@ class PixelFactory {
       case PixelType.Oil:
         return new OilPixel(pos);
 
+      case PixelType.Fuse:
+        return new FusePixel(pos);
+
       default:
         throw new TypeError("Unknown PixelType " + type);
     }

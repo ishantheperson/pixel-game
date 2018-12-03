@@ -30,7 +30,7 @@ class Game {
     //#region Handles switching tool/pixel types
     document.getElementById("items").addEventListener("click", (event) => {
       if ((<HTMLElement>event.target).tagName === "P") {
-        const id = (<HTMLElement>event.target).parentElement.id;
+        const id = (<HTMLElement>event.target).parentElement.parentElement.id;
         const newType = (<HTMLElement>event.target).innerText;
         
         if (id === "tools") {
@@ -75,7 +75,7 @@ class Game {
         this.UseTool(this.MouseToWorld());
       }
     });
-    
+
     //#endregion
     
     this.gameLoopInterval = setInterval(() => {

@@ -1,3 +1,5 @@
+/// <reference path="../Pixel.ts" />
+
 class BlockPixel extends Pixel {
   public GetDurability(): number {
     return PixelDurabilities.Block;

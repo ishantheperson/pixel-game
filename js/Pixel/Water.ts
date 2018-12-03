@@ -1,5 +1,8 @@
 /// <reference path="../Pixel.ts"/>
 
+/**
+ * Basic liquid pixel.
+ */
 class WaterPixel extends Pixel {
   public Update(world: World): void {
     super.Update(world);
