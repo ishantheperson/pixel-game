@@ -30,7 +30,7 @@ abstract class Pixel {
    */
   public Velocity: Vector2 = { x: 0, y: 0 };
   
-  public Acceleration: Vector2 = { x: 0, y: 0 };
+  // public Acceleration: Vector2 = { x: 0, y: 0 };
 
   /**
    * Initializes pixel
@@ -48,6 +48,7 @@ abstract class Pixel {
    */
   public Update(world: World): void {
     this.DidUpdate = true;
+    //#region Physics
     if (this.IsStatic()) return;
 
     this.ApplyForce(World.Gravity);
@@ -80,6 +81,7 @@ abstract class Pixel {
         break;
       }
     }    
+    //#endregion
   }
   
   public ApplyForce(force: Vector2): void {

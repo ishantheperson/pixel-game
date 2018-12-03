@@ -97,7 +97,10 @@ class Game {
   }
   
   private AddPixel(worldPos: Vector2): void {
-    this.world.AddPixel(worldPos, this.currentPixel);
+    const scale = PixelInsertScales[PixelType[this.currentPixel]] || PixelInsertScales.Default;
+    for (let y = worldPos.y; y < worldPos.y + scale; y++)
+      for (let x = worldPos.x; x < worldPos.x + scale; x++)
+        this.world.AddPixel({ x, y }, this.currentPixel);
   }
   
   private UseTool(worldPos: Vector2): void {

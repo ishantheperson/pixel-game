@@ -1,17 +1,17 @@
 class BlockPixel extends Pixel {
-  GetDurability(): number {
+  public GetDurability(): number {
     return PixelDurabilities.Block;
   }
   
-  GetWeight(): number {
+  public GetWeight(): number {
     return PixelWeights.Block;
   }
   
-  GetType(): PixelType {
+  public GetType(): PixelType {
     return PixelType.Block;
   }
-  
-  GetColor(): string {
+
+  public GetColor(): string {
     return "gray";
   }
 }

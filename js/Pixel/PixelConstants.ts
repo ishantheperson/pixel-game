@@ -17,3 +17,8 @@ const PixelViscosities = {
   Water: 3,
   Magma: 30
 };
+
+const PixelInsertScales = {
+  Default: 2,
+  Block: 4
+};

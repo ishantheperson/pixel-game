@@ -24,11 +24,14 @@ class World {
   /**
    * Adds a new pixel to the board.
    * Does nothing if a pixel is already there
+   * or if the passed position is out of bounds
    * @param pos Position to add
    * @param type Pixel type
    */
   public AddPixel(pos: Vector2, type: PixelType): void {
-    if (this.board[pos.y][pos.x] == null)
+    if (0 <= pos.y && pos.y < this.size.y
+      && 0 <= pos.x && pos.x < this.size.x 
+      && this.board[pos.y][pos.x] == null)
       this.board[pos.y][pos.x] = PixelFactory.NewPixel(pos, type);
   }
   
@@ -39,7 +42,7 @@ class World {
    */
   public GetPixel(pos: Vector2): Pixel {
     if (0 <= pos.y && pos.y < this.size.y
-       && 0 <= pos.x && pos.x < this.size.x )
+       && 0 <= pos.x && pos.x < this.size.x)
       return this.board[pos.y][pos.x];
     
     // Out of bounds
