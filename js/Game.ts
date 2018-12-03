@@ -13,7 +13,8 @@ class Game {
   private context: CanvasRenderingContext2D;
   
   private mouseEvent: MouseEvent;
-  private isMouseDown: boolean = false;
+  private isMouseDown: boolean = false; // left button
+  private isMouseRightDown: boolean = false;
   private isShiftDown: boolean = false;
   
   private currentPixel: PixelType = PixelType.Sand;
@@ -60,11 +61,13 @@ class Game {
     //#region Mouse
     canvas.addEventListener("mouseup", () => {
       this.isMouseDown = false;
+      this.isMouseRightDown = false;
     });
   
     canvas.addEventListener("mousedown", (event: MouseEvent) => {
       this.mouseEvent = event;
-      this.isMouseDown = true;
+      this.isMouseDown = event.button === 0;
+      this.isMouseRightDown = event.button === 2;
     });
 
     canvas.addEventListener("mousemove", (event: MouseEvent) => {
@@ -97,6 +100,7 @@ class Game {
         else
           this.AddPixel(this.MouseToWorld());
       }
+      if (this.isMouseRightDown) this.UseTool(this.MouseToWorld());
 
       if (!this.isPaused) this.world.UpdateAll();
       this.Render();

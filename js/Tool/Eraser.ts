@@ -1,6 +1,6 @@
 /// <reference path="../Tool.ts" />
 
-class Eraser extends Tool {
+class EraserTool extends Tool {
   public Apply(location: Vector2, world: World): void {
     const scale = PixelInsertScales.Block;
 

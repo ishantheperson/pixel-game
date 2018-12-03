@@ -13,9 +13,9 @@ class World {
     this.size = size;
     
     // Initialize empty board
-    this.board = [];
+    this.board = Array(size.y);
     for (let y = 0; y < size.y; y++) {
-      this.board.push([]);
+      this.board[y] = Array(size.x);
       for (let x = 0; x < size.x; x++) {
         this.board[y][x] = null;
       }
@@ -39,7 +39,8 @@ class World {
   }
   
   /**
-   * Gets pixel at specified location
+   * Gets pixel at specified location,
+   * returning `PixelType.Block` if out of bounds
    * @param pos Location from top left
    * @returns Pixel requested
    */
@@ -50,6 +51,21 @@ class World {
     
     // Out of bounds
     return PixelFactory.NewPixel(pos, PixelType.Block);
+  }
+
+  /**
+   * Gets pixel at specified location, 
+   * returning `null` if out of bounds
+   * @param pos Location from top left
+   * @returns Pixel requested, or `null` if out of bounds
+   */
+  public GetPixelNull(pos: Vector2): Pixel {
+    if (0 <= pos.y && pos.y < this.size.y
+      && 0 <= pos.x && pos.x < this.size.x)
+    return this.board[pos.y][pos.x];
+
+    // Out of bounds
+    return null;
   }
   
   /**

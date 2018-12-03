@@ -15,18 +15,18 @@ class WaterPixel extends Pixel {
     if (random === 1) {
       const left = { x: this.GetPosition().x - 1, y: this.GetPosition().y };
       
-      if (world.GetPixel(left) === null) {
+      if (Pixel.CanMoveInto(this, world.GetPixel(left))) {
         world.Swap(this.GetPosition(), left);
       }
     }
     else if (random === 2) {
       const right = { x: this.GetPosition().x + 1, y: this.GetPosition().y };
-      if (world.GetPixel(right) === null) {
+      if (Pixel.CanMoveInto(this, world.GetPixel(right))) {
         world.Swap(this.GetPosition(), right);
       }
     }
   }
-  
+
   public IsStatic(): boolean {
     return false;
   }

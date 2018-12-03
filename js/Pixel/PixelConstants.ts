@@ -27,6 +27,9 @@ const PixelColors = {
   Stone: "lightgrey"
 };
 
+/**
+ * Resistance to damage
+ */
 const PixelDurabilities = {
   Default: 10,
   Block: Number.MAX_SAFE_INTEGER,
@@ -35,6 +38,9 @@ const PixelDurabilities = {
   Stone: 29
 };
 
+/**
+ * Physical weight 
+ */
 const PixelWeights = {
   Default: 20,
   Block: Number.MAX_SAFE_INTEGER,
@@ -43,13 +49,21 @@ const PixelWeights = {
   Stone: 30
 };
 
+/**
+ * Liquid viscosity.
+ * Affects stacking of liquids
+ */
 const PixelViscosities = {
   Default: Number.MAX_SAFE_INTEGER,
-  Oil: 3,
+  Oil: 10,
   Water: 6,
   Magma: 30
 };
 
+/**
+ * Pixel size when inserted
+ * (inserts a square of this size)
+ */
 const PixelInsertScales = {
   Default: 4,
   Clone: 4,

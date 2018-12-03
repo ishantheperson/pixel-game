@@ -19,6 +19,7 @@
       canvas.width = WIDTH;
       canvas.height = HEIGHT;
       canvas.style.border = "1px solid black";
+      canvas.oncontextmenu = () => false;
 
       gameArea.appendChild(canvas);
 
@@ -34,7 +35,7 @@
   <h2>Ishan Bhargava</h2>
   <p>
     Click to add pixels<br>
-    Shift-click to use a tool and <kbd>P</kbd> to pause
+    Right/Shift-click to use a tool and <kbd>P</kbd> to pause
   </p>
 
   <div id="items">
@@ -42,6 +43,7 @@
       <h3>Tools</h3>
       <div>
         <p class="selected">Eraser</p>
+        <p>FloodEraser</p>
         <p>Explosion</p>
       </div>
     </div>

@@ -97,6 +97,11 @@ abstract class Pixel {
     return true;
   }
   
+  /**
+   * Returns this pixel's position
+   * in world coordinates 
+   * (i.e.) integer part only
+   */
   public GetPosition(): Vector2 {
     return {
       x: Math.floor(this.position.x),
@@ -115,7 +120,10 @@ abstract class Pixel {
   public GetDurability(): number {
     return PixelDurabilities.Default;
   }
-  
+
+  /**
+   * Returns pixel's weight
+   */
   public GetWeight(): number {
     return PixelWeights.Default;
   }
