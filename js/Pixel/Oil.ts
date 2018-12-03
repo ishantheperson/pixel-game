@@ -10,9 +10,9 @@ class OilPixel extends WaterPixel {
         if (pixel !== null && pixel.GetType() === PixelType.Magma) {
           // React with magma, produce an explosion here
           // Delete magma
+          console.log("Explosion");
           world.DestroyPixel(pixel.Position, Number.MAX_SAFE_INTEGER);
           ToolFactory.GetTool(ToolType.Explosion).Apply(this.Position, world);
-          console.log("Explosion");
         }
       }
     }

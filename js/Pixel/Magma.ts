@@ -8,8 +8,16 @@ class MagmaPixel extends WaterPixel {
     let didDestroy = false;
     for (let y = -1; y <= 1; y++) {
       for (let x = -1; x <= 1; x++) {
-        if (world.DestroyPixel({ x: this.Position.x + x, y: this.Position.y + y }, this.GetDurability()))
-          didDestroy = true;
+        const pixel = world.GetPixel({  x: this.Position.x + x, y: this.Position.y + y });
+        if (pixel !== null) {
+          if (pixel.GetType() === PixelType.Oil) {
+            world.DestroyPixel(pixel.Position, Number.MAX_SAFE_INTEGER);
+            ToolFactory.GetTool(ToolType.Explosion).Apply(this.Position, world);  
+          }
+          if (world.DestroyPixel(pixel.Position, this.GetDurability())) {
+            didDestroy = true;
+          }
+        }
       }
     }
     if (didDestroy) world.DestroyPixel(this.Position, Number.MAX_SAFE_INTEGER);
