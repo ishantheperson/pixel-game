@@ -1,12 +1,19 @@
+const EXPLOSION_DISTANCE = 60;
+const EXPLOSION_FORCE = 150;
+
 class ExplosionTool extends Tool {
-  static Apply(location: Vector2, world: World): void {
+  public static Apply(location: Vector2, world: World): void {
     world.DestroyPixel(location, Number.MAX_SAFE_INTEGER);
   
-    for (let y = -10; y <= 10; y++) {
-      for (let x = -10; x <= 10; x++) {
+    for (let y = -EXPLOSION_DISTANCE; y <= EXPLOSION_DISTANCE; y++) {
+      for (let x = -EXPLOSION_DISTANCE; x <= EXPLOSION_DISTANCE; x++) {
         const pixel = world.GetPixel({ x: location.x + x, y: location.y + y });
         if (pixel !== null) {
-          pixel.ApplyForce({x: x * 60, y: y * 60 });
+          const norm = Math.hypot(x, y);
+          pixel.ApplyForce({
+            x: Math.floor(x * EXPLOSION_FORCE / norm), 
+            y: Math.floor(y * EXPLOSION_FORCE / norm) 
+          });
         }
       }
     }

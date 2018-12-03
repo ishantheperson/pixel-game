@@ -18,7 +18,7 @@ class ClonePixel extends BlockPixel {
       // 50% chance of spawning a new pixel
       if (GetRandomInt(100) % 4 === 0) {
         // Select a random location to the side
-        const x = this.Position.x + (GetRandomInt(2) === 0 ? -1 : 1);
+        const x = this.Position.x + (GetRandomInt(3) - 1);
         const y = this.Position.y + (GetRandomInt(3) - 1);
         world.AddPixel({ x, y }, this.cloneType);
       }

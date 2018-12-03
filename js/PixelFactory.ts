@@ -1,5 +1,5 @@
 class PixelFactory {
-  static NewPixel(pos: Vector2, type: PixelType) {
+  public static NewPixel(pos: Vector2, type: PixelType) {
     switch (type) {
       case PixelType.Empty:
         return null;
