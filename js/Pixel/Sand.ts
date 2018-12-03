@@ -4,27 +4,19 @@
  * Basic sand pixel
  */
 class SandPixel extends Pixel {
-  Update(world: World): void {
+  public Update(world: World): void {
     super.Update(world);
-    // this.DidUpdate = true;
-    //
-    // const below = { x: this.Position.x, y: this.Position.y + 1 };
-    // const belowPixel = world.GetPixel(below);
-    //
-    // if (Pixel.CanMoveInto(this, belowPixel)) {
-    //   world.Swap({ ...this.Position }, below);
-    // }
   }
   
-  IsStatic(): boolean {
+  public IsStatic(): boolean {
     return false;
   }
 
-  GetColor(): string {
+  public GetColor(): string {
     return "#ffc22d"; // yellow ish
   }
   
-  GetType(): PixelType {
+  public GetType(): PixelType {
     return PixelType.Sand;
   }
 }

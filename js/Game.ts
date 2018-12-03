@@ -25,9 +25,9 @@ class Game {
       y: Math.floor(size.y / PIXEL_SIZE) 
     });
     
-    // <editor-fold desc="Register event handlers">
+    //#region Register event handlers
     
-    // Handles switching tool/pixel types
+    //#region Handles switching tool/pixel types
     document.getElementById("items").addEventListener("click", (event) => {
       if ((<HTMLElement>event.target).tagName === "P") {
         const id = (<HTMLElement>event.target).parentElement.id;
@@ -53,8 +53,9 @@ class Game {
         (<HTMLElement>event.target).classList.add("selected");
       }
     });
+    //#endregion
   
-    // <editor-fold desc="Mouse">
+    //#region Mouse
     canvas.addEventListener("mouseup", () => {
       this.isMouseDown = false;
     });
@@ -67,7 +68,7 @@ class Game {
     canvas.addEventListener("mousemove", (event: MouseEvent) => {
       this.mouseEvent = event;
     });
-    // </editor-fold>
+    //#endregion
     
     document.addEventListener("keydown", (event: KeyboardEvent) => {
       if (event.key === "t") {
@@ -75,7 +76,7 @@ class Game {
       }
     });
     
-    // </editor-fold>
+    //#endregion
     
     this.gameLoopInterval = setInterval(() => {
       if (this.isMouseDown)

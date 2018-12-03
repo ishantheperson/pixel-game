@@ -1,3 +1,12 @@
+enum PixelType {
+  Empty,
+  Block,
+  Sand,
+  Water,
+  Magma,
+  Clone
+}
+
 const PixelDurabilities = {
   Default: 10,
   Block: Number.MAX_SAFE_INTEGER,
