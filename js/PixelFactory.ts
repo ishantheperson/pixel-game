@@ -25,6 +25,9 @@ class PixelFactory {
       case PixelType.Fuse:
         return new FusePixel(pos);
 
+      case PixelType.Stone:
+        return new StonePixel(pos);
+
       default:
         throw new TypeError("Unknown PixelType " + type);
     }

@@ -6,6 +6,6 @@ class Eraser extends Tool {
 
     for (let y = location.y; y < location.y + scale; y++)
       for (let x = location.x; x < location.x + scale; x++)
-        world.DestroyPixel({ x, y }, Number.MAX_SAFE_INTEGER + 1);
+        world.DeletePixel({ x, y });
   }
 }

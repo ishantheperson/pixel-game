@@ -7,6 +7,7 @@ class World {
 
   private readonly size: Vector2; // store for easy of access
   private readonly board: Pixel[][];
+  private numPixels: number = 0;
   
   public constructor(size: Vector2) {
     this.size = size;
@@ -30,9 +31,11 @@ class World {
    */
   public AddPixel(pos: Vector2, type: PixelType): void {
     if (0 <= pos.y && pos.y < this.size.y
-      && 0 <= pos.x && pos.x < this.size.x 
-      && this.board[pos.y][pos.x] == null)
-      this.board[pos.y][pos.x] = PixelFactory.NewPixel(pos, type);
+          && 0 <= pos.x && pos.x < this.size.x 
+          && this.board[pos.y][pos.x] == null) {
+        this.numPixels++;
+        this.board[pos.y][pos.x] = PixelFactory.NewPixel(pos, type);
+    }
   }
   
   /**
@@ -42,13 +45,22 @@ class World {
    */
   public GetPixel(pos: Vector2): Pixel {
     if (0 <= pos.y && pos.y < this.size.y
-       && 0 <= pos.x && pos.x < this.size.x)
-      return this.board[pos.y][pos.x];
+          && 0 <= pos.x && pos.x < this.size.x)
+        return this.board[pos.y][pos.x];
     
     // Out of bounds
     return PixelFactory.NewPixel(pos, PixelType.Block);
   }
   
+  /**
+   * Deletes a pixel for sure
+   * @param pos Position of the pixel to delete
+   */
+  public DeletePixel(pos: Vector2): void {
+    this.board[pos.y][pos.x] = null;
+    this.numPixels--;
+  }
+
   /**
    * Attempts to destroy a pixel using the durability system
    * @param pos Position of the pixel to delete
@@ -59,9 +71,10 @@ class World {
     if (0 <= pos.y && pos.y < this.size.y
           && 0 <= pos.x && pos.x < this.size.x
           && this.board[pos.y][pos.x] !== null
-          && sourceDurability > this.board[pos.y][pos.x].GetDurability()) {
-      this.board[pos.y][pos.x] = null;
-      return true;
+          && sourceDurability > this.board[pos.y][pos.x].GetDurability()
+          && Chance(sourceDurability - this.board[pos.y][pos.x].GetDurability())) {
+        this.DeletePixel(pos);
+        return true;
     }
     
     return false;
@@ -79,7 +92,7 @@ class World {
    * @param magnitude Explosion force
    */
   public Explode(location: Vector2, size: number = 60, magnitude: number = 150) {
-    this.DestroyPixel(location, Number.MAX_SAFE_INTEGER);
+    this.DeletePixel(location);
   
     for (let y = -size; y <= size; y++) {
       for (let x = -size; x <= size; x++) {
@@ -93,7 +106,6 @@ class World {
         }
       }
     }
-
   }
   
   public UseTool(location: Vector2, type: ToolType): void {
@@ -147,5 +159,9 @@ class World {
           render({ x, y}, this.board[y][x].GetColor());
       }
     }
+  }
+
+  public GetNumPixels(): number {
+    return this.numPixels;
   }
 }

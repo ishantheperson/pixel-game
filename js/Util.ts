@@ -14,3 +14,11 @@ interface Array<T> {
 function GetRandomInt(max: number): number {
   return Math.floor(Math.random() * Math.floor(max));
 }
+
+/**
+ * Returns true `probability`% of the time
+ * @param probability From 0-100%, chance this occurs
+ */
+function Chance(probability: number): boolean {
+  return GetRandomInt(100) < probability;
+}

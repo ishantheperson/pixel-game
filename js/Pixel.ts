@@ -97,6 +97,13 @@ abstract class Pixel {
     return true;
   }
   
+  public GetPosition(): Vector2 {
+    return {
+      x: Math.floor(this.Position.x),
+      y: Math.floor(this.Position.y)
+    };
+  }
+
   /**
    * How hard is it to destroy this.
    * Lower is easier
