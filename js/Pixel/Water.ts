@@ -13,16 +13,16 @@ class WaterPixel extends Pixel {
     const random = GetRandomInt(4 + (this.GetFluidViscosity() / PixelViscosities.Water));
     
     if (random === 1) {
-      const left = { x: this.Position.x - 1, y: this.Position.y };
+      const left = { x: this.GetPosition().x - 1, y: this.GetPosition().y };
       
       if (world.GetPixel(left) === null) {
-        world.Swap({ ...this.Position }, left);
+        world.Swap(this.GetPosition(), left);
       }
     }
     else if (random === 2) {
-      const right = { x: this.Position.x + 1, y: this.Position.y };
+      const right = { x: this.GetPosition().x + 1, y: this.GetPosition().y };
       if (world.GetPixel(right) === null) {
-        world.Swap({ ...this.Position }, right);
+        world.Swap(this.GetPosition(), right);
       }
     }
   }

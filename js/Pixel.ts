@@ -23,12 +23,12 @@ abstract class Pixel {
    * Particle Position.
    * Used for physics calculations (e.g. get neighbors)
    */
-  public Position: Vector2;
+  private position: Vector2;
   
   /**
    * Particle velocity
    */
-  public Velocity: Vector2 = { x: 0, y: 0 };
+  private velocity: Vector2 = { x: 0, y: 0 };
   
   // public Acceleration: Vector2 = { x: 0, y: 0 };
 
@@ -38,7 +38,7 @@ abstract class Pixel {
    * @constructor
    */
   constructor(pos: Vector2) {
-    this.Position = pos;
+    this.position = pos;
   }
   
   /**
@@ -53,31 +53,31 @@ abstract class Pixel {
 
     this.ApplyForce(World.Gravity);
 
-    let y = this.Velocity.y;
-    let x = this.Velocity.x;
+    let y = this.velocity.y;
+    let x = this.velocity.x;
     
     // Resolve y component
-    while (y !== 0) {
-      const dir = { x: this.Position.x, y: this.Position.y + (y < 0 ? -1 : 1) };
+    while (Math.round(y) !== 0) {
+      const dir = { x: this.GetPosition().x, y: this.GetPosition().y + (y < 0 ? -1 : 1) };
       if (Pixel.CanMoveInto(this, world.GetPixel(dir))) {
-        y += y < 0 ? 1 : -1;
-        world.Swap(this.Position, dir);
+        y = y < 0 ? Math.min(0, y + 1) : Math.max(0, y - 1); // infinite loop
+        world.Swap(this.GetPosition(), dir);
       }
       
       else {
-        this.Velocity.y = 0;
+        this.velocity.y = 0;
         break;
       }
     }
     // Resolve x component
-    while (x !== 0) {
-      const dir = { x: this.Position.x + (x < 0 ? -1 : 1), y: this.Position.y };
+    while (Math.round(x) !== 0) {
+      const dir = { x: this.GetPosition().x + (x < 0 ? -1 : 1), y: this.GetPosition().y };
       if (Pixel.CanMoveInto(this, world.GetPixel(dir))) {
-        x += x < 0 ? 1 : -1;
-        world.Swap(this.Position, dir);
+        x = x < 0 ? Math.min(0, x + 1) : Math.max(0, x - 1);
+        world.Swap(this.GetPosition(), dir);
       }
       else {
-        this.Velocity.x = 0;  
+        this.velocity.x = 0;  
         break;
       }
     }    
@@ -85,8 +85,8 @@ abstract class Pixel {
   }
   
   public ApplyForce(force: Vector2): void {
-    this.Velocity.x += Math.floor(force.x / this.GetWeight());
-    this.Velocity.y += Math.floor(force.y / this.GetWeight());
+    this.velocity.x += force.x / this.GetWeight();
+    this.velocity.y += force.y / this.GetWeight();
   }
   
   /**
@@ -99,9 +99,13 @@ abstract class Pixel {
   
   public GetPosition(): Vector2 {
     return {
-      x: Math.floor(this.Position.x),
-      y: Math.floor(this.Position.y)
+      x: Math.floor(this.position.x),
+      y: Math.floor(this.position.y)
     };
+  }
+
+  public SetPosition(val: Vector2): void {
+    this.position = val;
   }
 
   /**

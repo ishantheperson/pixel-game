@@ -123,8 +123,8 @@ class World {
     
     const a = this.board[pos1.y][pos1.x];
     const b = this.board[pos2.y][pos2.x];
-    if (a != null) a.Position = { ...pos1 };
-    if (b != null) b.Position = { ...pos2 };
+    if (a != null) a.SetPosition({ ...pos1 });
+    if (b != null) b.SetPosition({ ...pos2 });
   }
   
   public UpdateAll(): void {

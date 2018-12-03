@@ -18,7 +18,7 @@ class ClonePixel extends BlockPixel {
       // Scan neighbours and try to pick up a pixel type
       for (let y = -1; y <= 1; y++) {
         for (let x = -1; x <= 1; x++) {
-          const pixel = world.GetPixel({ x: this.Position.x + x, y: this.Position.y + y });
+          const pixel = world.GetPixel({ x: this.GetPosition().x + x, y: this.GetPosition().y + y });
 
           if (pixel !== null) {
             if (pixel.GetType() === PixelType.Clone) {
@@ -35,8 +35,8 @@ class ClonePixel extends BlockPixel {
       // 50% chance of spawning a new pixel
       if (GetRandomInt(100) % CLONE_CHANCE === 0) {
         // Select a random location to the side
-        const x = this.Position.x + (GetRandomInt(3) - 1);
-        const y = this.Position.y + (GetRandomInt(3) - 1);
+        const x = this.GetPosition().x + (GetRandomInt(3) - 1);
+        const y = this.GetPosition().y + (GetRandomInt(3) - 1);
         world.AddPixel({ x, y }, this.cloneType);
       }
     }
