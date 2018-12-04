@@ -62,7 +62,9 @@ class Game {
     //#endregion
   
     //#region Mouse
-    canvas.addEventListener("mouseup", () => {
+    // This is on document so dragging outside the canvas
+    // doesn't cause any funkiness
+    document.addEventListener("mouseup", () => { 
       this.isMouseDown = false;
       this.isMouseRightDown = false;
     });
@@ -81,7 +83,7 @@ class Game {
     //#region Keyboard
     document.addEventListener("keydown", (event: KeyboardEvent) => {
       this.isShiftDown = event.shiftKey;
-      switch (event.key) {
+      switch (event.key.toLowerCase()) {
         case "t":
           this.UseTool(this.MouseToWorld());
           break;

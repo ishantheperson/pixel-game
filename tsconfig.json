@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "module": "none",
-    "target": "es6",
+    "target": "es2017",
+
     "sourceMap": true,
     "outFile": "./app.js"
   },

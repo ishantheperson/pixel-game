@@ -36,7 +36,7 @@ abstract class Pixel {
             && !visited.some(other => other.x === current.x && other.y === current.y)) {
         
         visited.push(current);
-        predicate(current);
+        if (predicate(current)) return;
 
         const left = { x: current.x - 1, y: current.y };
         const right = { x: current.x + 1, y: current.y };
@@ -170,11 +170,11 @@ abstract class Pixel {
   }
   
   /**
-   * Used to figure out which liquids go on top of others
-   * MAX_INT represents it's not a liquid
+   * Used to figure out which liquids go on top of others. 
+   * Default represents it's not a liquid
    */
   public GetFluidViscosity(): number {
-    return Number.MAX_SAFE_INTEGER;
+    return PixelViscosities.Default;
   }
   
   /**

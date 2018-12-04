@@ -12,6 +12,7 @@ class PortalPixel extends BlockPixel {
 
   public Update(world: World): void {
     super.Update(world);
+    
     // Check neighbors
     for (let y = -1; y <= 1; y++) {
       for (let x = -1; x <= 1; x++) {
@@ -28,17 +29,17 @@ class PortalPixel extends BlockPixel {
             Pixel.FloodFillSearch(otherPortal, world, (pos) => {
               // check neighbors
               const directions: Vector2[] = [
+                { x: pos.x, y: pos.y + 2 },
                 { x: pos.x - 2, y: pos.y },
                 { x: pos.x + 2, y: pos.y },
-                { x: pos.x, y: pos.y - 2 },
-                { x: pos.x, y: pos.y + 2 } 
+                { x: pos.x, y: pos.y - 2 }
               ];
 
               for (const direction of directions) {
                 if (world.GetPixelNull(direction) === null) {
                   // insert here
-                  world.DeletePixel(pixel.GetPosition());
-                  world.AddPixel(direction, pixel.GetType()).TeleportCooldown = TELEPORT_COOLDOWN;
+                  pixel.TeleportCooldown = TELEPORT_COOLDOWN;
+                  world.Swap(pixel.GetPosition(), direction);
                   return true;
                 }
               }
@@ -71,11 +72,13 @@ World.OnAddPixelHooks.push((location: Vector2, world: World) => {
         index = search;
         return true;
       }
+
       return false;
     });
 
     if (index === -1) 
       (pixel as PortalPixel).PortalNumber = PortalPixel.Portals.push(location) - 1;
-    else (pixel as PortalPixel).PortalNumber = index;
+    else 
+      (pixel as PortalPixel).PortalNumber = index;
   }
 });

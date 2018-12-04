@@ -2,11 +2,13 @@
 /// <reference path="Tool/Explosion.ts" />
 /// <reference path="Tool/Eraser.ts" />
 /// <reference path="Tool/FloodEraser.ts" />
+/// <reference path="Tool/Attract.ts" />
 
 enum ToolType {
   Explosion,
   Eraser,
-  FloodEraser
+  FloodEraser,
+  Attract
 }
 
 class ToolFactory {
@@ -17,6 +19,7 @@ class ToolFactory {
   private static toolsDict = {
     Explosion: new ExplosionTool(),
     Eraser: new EraserTool(),
-    FloodEraser: new FloodEraserTool()
+    FloodEraser: new FloodEraserTool(),
+    Attract: new AttractTool()
   };
 }

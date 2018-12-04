@@ -26,7 +26,8 @@ class World {
   }
   
   /**
-   * Adds a new pixel to the board.
+   * Adds a new pixel to the board, possibly
+   * replacing it (if then new pixel is a block)
    * Does nothing if a pixel is already there
    * or if the passed position is out of bounds
    * @param pos Position to add
@@ -34,14 +35,18 @@ class World {
    */
   public AddPixel(pos: Vector2, type: PixelType): Pixel {
     if (0 <= pos.y && pos.y < this.size.y
-          && 0 <= pos.x && pos.x < this.size.x 
-          && this.board[pos.y][pos.x] == null) {
-        this.numPixels++;
-        this.board[pos.y][pos.x] = PixelFactory.NewPixel(pos, type);
-        World.OnAddPixelHooks.forEach(func => func(pos, this));
+          && 0 <= pos.x && pos.x < this.size.x) {
+            const pixel = PixelFactory.NewPixel(pos, type);
+            // Block pixels can overwrite 
+            if (pixel instanceof BlockPixel) this.DeletePixel(pos);
 
-        return this.board[pos.y][pos.x];
-    }
+            if (this.board[pos.y][pos.x] === null) {
+              this.board[pos.y][pos.x] = pixel;
+              World.OnAddPixelHooks.forEach(func => func(pos, this));
+              this.numPixels++;
+              return this.board[pos.y][pos.x];
+            }
+        }
   }
   
   /**
@@ -114,9 +119,10 @@ class World {
    * @param location Explosion center
    * @param size Pixels to extend the explosion
    * @param magnitude Explosion force
+   * @param destroy Indicates whether to destroy the center pixel
    */
-  public Explode(location: Vector2, size: number = 60, magnitude: number = 150) {
-    this.DeletePixel(location);
+  public Explode(location: Vector2, size: number = 60, magnitude: number = 150, destroy: boolean = true) {
+    if (destroy) this.DeletePixel(location);
   
     for (let y = -size; y <= size; y++) {
       for (let x = -size; x <= size; x++) {
