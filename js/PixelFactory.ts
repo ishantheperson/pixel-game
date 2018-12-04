@@ -28,6 +28,9 @@ class PixelFactory {
       case PixelType.Stone:
         return new StonePixel(pos);
 
+      case PixelType.Portal:
+        return new PortalPixel(pos);
+
       default:
         throw new TypeError("Unknown PixelType " + type);
     }

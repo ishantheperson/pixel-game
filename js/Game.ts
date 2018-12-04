@@ -19,6 +19,8 @@ class Game {
   
   private currentPixel: PixelType = PixelType.Sand;
   private currentTool: ToolType = ToolType.Eraser;
+
+  private pixelCountElem: HTMLElement;
   
   constructor(size: Vector2, canvas: HTMLCanvasElement) {
     this.size = size;
@@ -28,8 +30,9 @@ class Game {
       y: Math.floor(size.y / PIXEL_SIZE) 
     });
     
+    this.pixelCountElem = document.getElementById("pixelCount");
+
     //#region Register event handlers
-    
     //#region Handles switching tool/pixel types
     document.getElementById("items").addEventListener("click", (event) => {
       if ((<HTMLElement>event.target).tagName === "P") {
@@ -75,6 +78,7 @@ class Game {
     });
     //#endregion
     
+    //#region Keyboard
     document.addEventListener("keydown", (event: KeyboardEvent) => {
       this.isShiftDown = event.shiftKey;
       switch (event.key) {
@@ -90,7 +94,7 @@ class Game {
     document.addEventListener("keyup", (event: KeyboardEvent) => {
       this.isShiftDown = event.shiftKey;
     });
-
+    //#endregion
     //#endregion
     
     this.gameLoopInterval = setInterval(() => {
@@ -104,6 +108,7 @@ class Game {
 
       if (!this.isPaused) this.world.UpdateAll();
       this.Render();
+      this.DisplayStats();
     }, 1000 / FPS);
   }
   
@@ -135,5 +140,9 @@ class Game {
       this.context.fillStyle = color;
       this.context.fillRect(pos.x * PIXEL_SIZE, pos.y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
     }));
+  }
+
+  private DisplayStats(): void {
+    this.pixelCountElem.innerHTML = this.world.GetNumPixels().toString();
   }
 }

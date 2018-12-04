@@ -15,10 +15,49 @@ abstract class Pixel {
   }
 
   /**
+   * Uses flood fill to search (or perform an action)
+   * on all neighboring pixels of the same type.
+   * @param location Location to start search
+   * @param world World object
+   * @param predicate Search predicate. If it returns true, the search stops
+   */
+  public static FloodFillSearch(location: Vector2, world: World, predicate: (position: Vector2) => boolean): void {
+    const startPixel = world.GetPixelNull(location);
+    if (startPixel === null) return;
+
+    const stack: Vector2[] = [ location ];
+    const type = startPixel.GetType();
+
+    const visited: Vector2[] = [];
+    while (stack.length !== 0) {
+      const current = stack.pop();
+      const currentPixel = world.GetPixelNull(current);
+      if (currentPixel !== null && currentPixel.GetType() === type 
+            && !visited.some(other => other.x === current.x && other.y === current.y)) {
+        
+        visited.push(current);
+        predicate(current);
+
+        const left = { x: current.x - 1, y: current.y };
+        const right = { x: current.x + 1, y: current.y };
+        const up = { x: current.x, y: current.y - 1 };
+        const down = { x: current.x, y: current.y + 1 };
+
+        stack.push(left, right, up, down);
+      }
+    }
+  }
+
+  /**
    * Prevents recalculations
    */
   public DidUpdate: boolean = false;
   
+  /**
+   * Time since last teleportation
+   */
+  public TeleportCooldown: number = 0;
+
   /**
    * Particle Position.
    * Used for physics calculations (e.g. get neighbors)
@@ -48,6 +87,8 @@ abstract class Pixel {
    */
   public Update(world: World): void {
     this.DidUpdate = true;
+    if (this.TeleportCooldown !== 0) --this.TeleportCooldown;
+
     //#region Physics
     if (this.IsStatic()) return;
 

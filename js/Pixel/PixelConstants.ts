@@ -10,7 +10,8 @@ enum PixelType {
   Clone,
   Oil,
   Fuse,
-  Stone
+  Stone,
+  Portal
 }
 
 /**
@@ -24,7 +25,8 @@ const PixelColors = {
   Clone: "#b29966",
   Oil: "brown",
   Fuse: "sienna",
-  Stone: "lightgrey"
+  Stone: "lightgrey",
+  Portal: "purple"
 };
 
 /**

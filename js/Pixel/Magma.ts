@@ -16,13 +16,14 @@ class MagmaPixel extends WaterPixel {
         const pixel = world.GetPixel({  x: this.GetPosition().x + x, y: this.GetPosition().y + y });
         if (pixel !== null) {
           if (pixel.GetType() === PixelType.Oil) {
-            world.DestroyPixel(this.GetPosition(), Number.MAX_SAFE_INTEGER);
+            world.DeletePixel(this.GetPosition());
             world.Explode(pixel.GetPosition(), 30, 60);
           } 
           else if (pixel.GetType() === PixelType.Fuse) {
-            // TODO: explode the entire chain
-            world.DestroyPixel(pixel.GetPosition(), Number.MAX_SAFE_INTEGER);
-            world.Explode(pixel.GetPosition(), 30, 60);
+            Pixel.FloodFillSearch(pixel.GetPosition(), world, (location) => {
+              world.Explode(location, 30, 60);
+              return false;
+            });
           }
           else if (world.DestroyPixel(pixel.GetPosition(), this.GetDurability())) {
             didDestroy = true;

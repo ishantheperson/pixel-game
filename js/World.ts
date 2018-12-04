@@ -5,8 +5,11 @@ class World {
   public static Gravity: Vector2 = { x: 0, y: 20 };
   public static AirResistance: Vector2 = { x: 0, y: 0 };
 
+  public static OnAddPixelHooks: Array<(location: Vector2, world: World) => void> = [];
+
   private readonly size: Vector2; // store for easy of access
   private readonly board: Pixel[][];
+  
   private numPixels: number = 0;
   
   public constructor(size: Vector2) {
@@ -29,12 +32,15 @@ class World {
    * @param pos Position to add
    * @param type Pixel type
    */
-  public AddPixel(pos: Vector2, type: PixelType): void {
+  public AddPixel(pos: Vector2, type: PixelType): Pixel {
     if (0 <= pos.y && pos.y < this.size.y
           && 0 <= pos.x && pos.x < this.size.x 
           && this.board[pos.y][pos.x] == null) {
         this.numPixels++;
         this.board[pos.y][pos.x] = PixelFactory.NewPixel(pos, type);
+        World.OnAddPixelHooks.forEach(func => func(pos, this));
+
+        return this.board[pos.y][pos.x];
     }
   }
   
@@ -73,8 +79,10 @@ class World {
    * @param pos Position of the pixel to delete
    */
   public DeletePixel(pos: Vector2): void {
-    this.board[pos.y][pos.x] = null;
-    this.numPixels--;
+    if (this.board[pos.y][pos.x] !== null) {
+      this.numPixels--;
+      this.board[pos.y][pos.x] = null;
+    }
   }
 
   /**
@@ -129,8 +137,8 @@ class World {
   }
   
   /**
-   * Swaps the Pixels at pos1, pos2 (i.e. move from pos1 to pos2)
-   * Updates their positions
+   * Swaps the Pixels at pos1, pos2 (i.e. move from pos1 to pos2) 
+   * and updates their positions
    */
   public Swap(pos1: Vector2, pos2: Vector2): void {
     const temp = this.board[pos1.y][pos1.x];

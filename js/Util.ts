@@ -6,6 +6,7 @@ type Vector2 = { x: number, y: number };
 // tslint:disable-next-line:interface-name
 interface Array<T> {
   find(predicate: (search: T) => boolean): T;
+  includes(elem: T): boolean;
 }
 
 /**

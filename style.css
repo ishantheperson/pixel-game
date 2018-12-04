@@ -9,6 +9,10 @@ body {
   font-size: 24px;
 }
 
+.small {
+  font-size: .6em;
+}
+
 #sidebar, #gameArea {
   align-self: center;
   width: 100%;
@@ -30,11 +34,21 @@ a { color: navy; text-decoration: underline; cursor: pointer; }
 
 #items {
   display: flex;
+  text-align: left;
+}
+
+#items p {
+  margin: 0;
+  padding: 0.4em;
 }
 
 .selectArea {
   flex-grow: 1;
-  padding: 0 1em;
+  padding-left: 1em;
+}
+
+.optionList {
+  column-count: 2;
 }
 
 #items p:not(.selected) {
