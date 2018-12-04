@@ -1,6 +1,6 @@
 /// <reference path="Block.ts" />
 
-const TELEPORT_COOLDOWN = 1000;
+const TELEPORT_COOLDOWN = 300;
 
 class PortalPixel extends BlockPixel {
   /**
