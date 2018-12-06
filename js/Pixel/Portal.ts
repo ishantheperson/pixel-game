@@ -12,7 +12,7 @@ class PortalPixel extends BlockPixel {
 
   public Update(world: World): void {
     super.Update(world);
-    
+
     // Check neighbors
     for (let y = -1; y <= 1; y++) {
       for (let x = -1; x <= 1; x++) {
@@ -29,10 +29,10 @@ class PortalPixel extends BlockPixel {
             Pixel.FloodFillSearch(otherPortal, world, (pos) => {
               // check neighbors
               const directions: Vector2[] = [
-                { x: pos.x, y: pos.y + 2 },
-                { x: pos.x - 2, y: pos.y },
-                { x: pos.x + 2, y: pos.y },
-                { x: pos.x, y: pos.y - 2 }
+                { x: pos.x, y: pos.y + 1 },
+                { x: pos.x - 1, y: pos.y },
+                { x: pos.x + 1, y: pos.y },
+                { x: pos.x, y: pos.y - 1 }
               ];
 
               for (const direction of directions) {
@@ -63,7 +63,7 @@ class PortalPixel extends BlockPixel {
 World.OnAddPixelHooks.push((location: Vector2, world: World) => {
   // Recalculate portals
   const pixel: Pixel = world.GetPixel(location);
-  if (pixel.GetType() === PixelType.Portal) {
+  if (pixel instanceof PortalPixel) {
     // See if it's part of any existing portal
     let index = -1;
     Pixel.FloodFillSearch(location, world, (searchLocation: Vector2) => {

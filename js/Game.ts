@@ -99,21 +99,23 @@ class Game {
     //#endregion
     //#endregion
     
-    this.gameLoopInterval = setInterval(() => {
-      if (this.isMouseDown) {
-        if (this.isShiftDown)
-          this.UseTool(this.MouseToWorld());
-        else
-          this.AddPixel(this.MouseToWorld());
-      }
-      if (this.isMouseRightDown) this.UseTool(this.MouseToWorld());
-
-      if (!this.isPaused) this.world.UpdateAll();
-      this.Render();
-      this.DisplayStats();
-    }, 1000 / FPS);
+    this.gameLoopInterval = setInterval(this.GameLoop, 1000 / FPS);
   }
   
+  private GameLoop(): void {
+    if (this.isMouseDown) {
+      if (this.isShiftDown)
+        this.UseTool(this.MouseToWorld());
+      else
+        this.AddPixel(this.MouseToWorld());
+    }
+    if (this.isMouseRightDown) this.UseTool(this.MouseToWorld());
+
+    if (!this.isPaused) this.world.UpdateAll();
+    this.Render();
+    this.DisplayStats();
+  }
+
   /**
    * Converts screen coordinates to scaled world coordinates
    */

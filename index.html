@@ -9,11 +9,12 @@
 
   <script src="app.js"></script>
   <script>
-    const WIDTH = 800, HEIGHT = 600;
+    let game; // In the global scope for debugging
 
-    let game;
     window.addEventListener("DOMContentLoaded", () => {
-      let canvas = document.createElement("canvas");
+      const WIDTH = 800, HEIGHT = 600;
+
+      let canvas = document.createElement("ca nvas");
       let gameArea = document.getElementById("gameArea");
 
       canvas.width = WIDTH;

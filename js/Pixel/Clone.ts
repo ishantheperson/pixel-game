@@ -21,7 +21,7 @@ class ClonePixel extends BlockPixel {
           const pixel = world.GetPixelNull({ x: this.GetPosition().x + x, y: this.GetPosition().y + y });
 
           if (pixel !== null) {
-            if (pixel.GetType() === PixelType.Clone) {
+            if (pixel instanceof ClonePixel) {
               // See if we can get a PixelType from a neighboring ClonePixel
               const type = (pixel as ClonePixel).cloneType;
               if (type !== PixelType.Empty) this.cloneType = type;
