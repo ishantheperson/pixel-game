@@ -1,3 +1,5 @@
+type AddPixelHookHandler = (location: Vector2, world: World) => void;
+
 /**
  * Abstract view of the game world
  */
@@ -5,7 +7,7 @@ class World {
   public static Gravity: Vector2 = { x: 0, y: 20 };
   public static AirResistance: Vector2 = { x: 0, y: 0 };
 
-  public static OnAddPixelHooks: Array<(location: Vector2, world: World) => void> = [];
+  public static OnAddPixelHooks: AddPixelHookHandler[] = [];
 
   private readonly size: Vector2; // store for easy of access
   private readonly board: Pixel[][];
@@ -42,7 +44,7 @@ class World {
 
             if (this.board[pos.y][pos.x] === null) {
               this.board[pos.y][pos.x] = pixel;
-              World.OnAddPixelHooks.forEach(func => func(pos, this));
+              World.OnAddPixelHooks.forEach((func: AddPixelHookHandler) => func(pos, this));
               this.numPixels++;
               return this.board[pos.y][pos.x];
             }
@@ -157,6 +159,9 @@ class World {
     if (b != null) b.SetPosition({ ...pos2 });
   }
   
+  /**
+   * Updates all pixels on the board
+   */
   public UpdateAll(): void {
     // Reset all particle update states
     for (let y = 0; y < this.size.y; y++) {
@@ -170,9 +175,8 @@ class World {
     for (let y = 0; y < this.size.y; y++) {
       for (let x = 0; x < this.size.x; x++) {
         const pixel = this.board[y][x];
-        if (pixel == null) continue;
-        if (pixel.DidUpdate) continue;
-        
+        if (pixel == null || pixel.DidUpdate) continue;
+
         pixel.Update(this);
       }
     }
@@ -183,12 +187,10 @@ class World {
    * @param render Graphics method to render an individual pixel
    */
   public RenderAll(render: (pos: Vector2, color: string) => void): void {
-    for (let y = 0; y < this.size.y; y++) {
-      for (let x = 0; x < this.size.x; x++) {
+    for (let y = 0; y < this.size.y; y++)
+      for (let x = 0; x < this.size.x; x++) 
         if (this.board[y][x] != null)
           render({ x, y}, this.board[y][x].GetColor());
-      }
-    }
   }
 
   public GetNumPixels(): number {

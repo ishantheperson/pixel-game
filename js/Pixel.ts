@@ -33,7 +33,7 @@ abstract class Pixel {
       const current = stack.pop();
       const currentPixel = world.GetPixelNull(current);
       if (currentPixel !== null && currentPixel.GetType() === type 
-            && !visited.some(other => other.x === current.x && other.y === current.y)) {
+            && !visited.some((other: Vector2) => other.x === current.x && other.y === current.y)) {
         
         visited.push(current);
         if (predicate(current)) return;
@@ -121,7 +121,10 @@ abstract class Pixel {
         this.velocity.x = 0;  
         break;
       }
-    }    
+    }
+    const airResistance = this.GetWeight() / PixelWeights.Default;
+    this.velocity.x = this.velocity.x < 0 
+      ? Math.min(0, this.velocity.x + airResistance) : Math.max(0, this.velocity.x - airResistance);    
     //#endregion
   }
   
