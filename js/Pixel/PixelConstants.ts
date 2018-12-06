@@ -59,7 +59,7 @@ const PixelViscosities = {
   Default: Number.MAX_SAFE_INTEGER,
   Oil: 10,
   Water: 6,
-  Magma: 30
+  Magma: 12
 };
 
 /**

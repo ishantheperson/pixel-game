@@ -24,7 +24,7 @@ class MagmaPixel extends WaterPixel {
             return false;
           });
         }
-        else if (world.DestroyPixel(pixel.GetPosition(), this.GetDurability())) {
+        else if (pixel !== null && world.DestroyPixel(pixel.GetPosition(), this.GetDurability())) {
           didDestroy = true;
         }
       }

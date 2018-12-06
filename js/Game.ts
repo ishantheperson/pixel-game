@@ -99,7 +99,7 @@ class Game {
     //#endregion
     //#endregion
     
-    this.gameLoopInterval = setInterval(this.GameLoop, 1000 / FPS);
+    this.gameLoopInterval = setInterval(this.GameLoop.bind(this), 1000 / FPS);
   }
   
   private GameLoop(): void {
@@ -128,6 +128,7 @@ class Game {
   
   private AddPixel(worldPos: Vector2): void {
     const scale = PixelInsertScales[PixelType[this.currentPixel]] || PixelInsertScales.Default;
+
     for (let y = worldPos.y; y < worldPos.y + scale; y++)
       for (let x = worldPos.x; x < worldPos.x + scale; x++)
         this.world.AddPixel({ x, y }, this.currentPixel);
