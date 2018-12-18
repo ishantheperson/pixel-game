@@ -74,7 +74,7 @@ abstract class Pixel {
   /**
    * Initializes pixel
    * @param pos Pixel Position
-   * @constructor
+   * @constructor 
    */
   constructor(pos: Vector2) {
     this.position = pos;
