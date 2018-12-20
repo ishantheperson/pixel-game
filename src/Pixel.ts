@@ -6,8 +6,6 @@ abstract class Pixel {
   /**
    * Returns true if (a) can move into (b)
    * Basically means switch places
-   * @param a
-   * @param b
    */
   public static CanMoveInto(a: Pixel, b: Pixel): boolean {
     return b === null ||
@@ -69,8 +67,6 @@ abstract class Pixel {
    */
   private velocity: Vector2 = { x: 0, y: 0 };
   
-  // public Acceleration: Vector2 = { x: 0, y: 0 };
-
   /**
    * Initializes pixel
    * @param pos Pixel Position
@@ -178,6 +174,10 @@ abstract class Pixel {
    */
   public GetFluidViscosity(): number {
     return PixelViscosities.Default;
+  }
+
+  public IsFlammable(): boolean {
+    return false;
   }
   
   /**

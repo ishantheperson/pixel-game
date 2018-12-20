@@ -14,6 +14,8 @@ class MagmaPixel extends WaterPixel {
     for (let y = -1; y <= 1; y++) {
       for (let x = -1; x <= 1; x++) {
         const pixel = world.GetPixel({  x: this.GetPosition().x + x, y: this.GetPosition().y + y });
+
+        // Ignite
         if (pixel instanceof OilPixel) {
           world.DeletePixel(this.GetPosition());
           world.Explode(pixel.GetPosition(), 30, 60);

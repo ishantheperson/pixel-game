@@ -23,7 +23,7 @@ class ClonePixel extends BlockPixel {
           if (pixel !== null) {
             if (pixel instanceof ClonePixel) {
               // See if we can get a PixelType from a neighboring ClonePixel
-              const type = (pixel as ClonePixel).cloneType;
+              const type = (<ClonePixel>pixel).cloneType;
               if (type !== PixelType.Empty) this.cloneType = type;
             }
             else this.cloneType = pixel.GetType();

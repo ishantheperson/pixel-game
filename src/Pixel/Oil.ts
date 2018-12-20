@@ -5,6 +5,10 @@ class OilPixel extends WaterPixel {
     return PixelViscosities.Oil;
   }
 
+  public IsFlammable(): boolean {
+    return true;
+  }
+
   public GetType(): PixelType {
     return PixelType.Oil;
   }
